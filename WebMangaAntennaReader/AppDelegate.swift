@@ -13,13 +13,73 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    let BACKGROUND_FETCH_INTERBAL = NSTimeInterval(3600)
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let settings = UIUserNotificationSettings(
+            forTypes: UIUserNotificationType.Badge
+                | UIUserNotificationType.Sound
+                | UIUserNotificationType.Alert,
+            categories: nil)
+        application.registerUserNotificationSettings(settings);
+        
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(BACKGROUND_FETCH_INTERBAL);
+        
         return true
     }
-
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {        
+        let notification = NSNotification(name: Constants.Notifications.UPDATE_COMIC, object: nil)
+        NSNotificationCenter.defaultCenter().postNotification(notification)
+    }
+    
+    func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        let ud = NSUserDefaults.standardUserDefaults()
+        if let myListId:String = ud.stringForKey(Constants.UserDefaultsKeys.MY_LIST_ID) {
+            NSLog("Fetch Start.")
+            RemoteComic.fetch(forList: myListId) { (remoteComics, error, local) -> Void in
+                let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
+                for remoteComic in remoteComics {
+                    comicDao.save(remoteComic)
+                }
+                if let willNotifyComics: [Comic] = comicDao.findWillNotify() {
+                    NSLog("Fetch Finished with NewData")
+                    self.notify(willNotifyComics)
+                    for comic in willNotifyComics {
+                        comic.willNotify = false
+                        comicDao.save(comic)
+                    }
+                    completionHandler(UIBackgroundFetchResult.NewData)
+                } else {
+                    NSLog("Fetch Finished with NoData")
+                    completionHandler(UIBackgroundFetchResult.NoData)
+                }
+            }
+        } else {
+            NSLog("Fetch didn't start because my list id is not registered.")
+            completionHandler(UIBackgroundFetchResult.NoData)
+        }
+    }
+    
+    func notify(comics:[Comic]) {
+        if count(comics) == 0 { return }
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        let topComic = comics[0]
+        var notification = UILocalNotification()
+        notification.fireDate = NSDate()	// すぐに通知したいので現在時刻を取得
+        notification.timeZone = NSTimeZone.defaultTimeZone()
+        if count(comics) == 1 {
+            notification.alertBody = String(format: "「%@」が更新されました！", arguments: [topComic.title])
+        } else {
+            let numOfComics:String = String(count(comics) - 1)
+            notification.alertBody = String(format: "「%@」他、%@本の漫画が更新されました！", arguments: [topComic.title, numOfComics])
+        }
+        notification.alertAction = "OK"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 1;
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -45,30 +105,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Core Data stack
-
+    
     lazy var applicationDocumentsDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "net.takashi8.WebMangaAntennaReader" in the application's documents Application Support directory.
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "net.takashi8.TestCoreDate" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
-    }()
-
+        return urls[urls.count-1] as! NSURL
+        }()
+    
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource("WebMangaAntennaReader", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
-    }()
-
+        }()
+    
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("WebMangaAntennaReader.sqlite")
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("TestCoreDate.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
-            let dict = NSMutableDictionary()
+            var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error
@@ -80,8 +140,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return coordinator
-    }()
-
+        }()
+    
     lazy var managedObjectContext: NSManagedObjectContext? = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
@@ -91,10 +151,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var managedObjectContext = NSManagedObjectContext()
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
-    }()
-
+        }()
+    
     // MARK: - Core Data Saving support
-
+    
     func saveContext () {
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
