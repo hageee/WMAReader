@@ -49,11 +49,11 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
                         })
                     })
                 } else {
-                    self.showListAlert("まずいことになりました", message: "漫画の更新情報が取得できませんでした。リストのURLをご確認ください。")
+                    self.showListAlert("エラー", message: "漫画の更新情報が取得できませんでした。ネットワークに繋がっていないか、リストのURLが無効な可能性があります。リストのURLをご確認ください。")
                 }
             }
         } else {
-            self.showListAlert("ようこそ", message: "Web漫画アンテナのリストURLが未設定です。リストURLを設定してください。")
+            self.showListAlert("初期設定をお願いします", message: "Web漫画アンテナリーダーをお使いいただくには、Web漫画アンテナで作成したリストURLの設定が必要です。")
         }
     }
 
@@ -61,7 +61,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         self.refreshControl?.endRefreshing()
         var alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { action in
-            self.performSegueWithIdentifier(Constants.Seques.SHOW_SETTING, sender: self)
+            self.performSegueWithIdentifier(Constants.Seques.SHOW_INIT, sender: self)
         }
         alertController.addAction(okAction)
         self.presentViewController(alertController, animated: true, completion: nil)
@@ -90,7 +90,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         var imageUrl: String? = comic.valueForKey("thumb") as? String
         cell.titleLabel.text = comic.valueForKey("title") as? String
         cell.updateTimeLabel.text = comic.valueForKey("updatedAt") as? String
-        cell.siteNameLabel.text = comic.siteName
+        cell.siteNameLabel.text = comic.valueForKey("siteName") as? String
         cell.comicImageView.image = nil
         
         var q_global: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);

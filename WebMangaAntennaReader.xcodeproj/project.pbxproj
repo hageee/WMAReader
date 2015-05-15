@@ -16,8 +16,10 @@
 		04445E261A5D716500B3C6A0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04445E241A5D716500B3C6A0 /* LaunchScreen.xib */; };
 		04445E321A5D716600B3C6A0 /* WebMangaAntennaReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E311A5D716600B3C6A0 /* WebMangaAntennaReaderTests.swift */; };
 		04445E3C1A5D765900B3C6A0 /* ComicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E3B1A5D765900B3C6A0 /* ComicCell.swift */; };
-		044D55081ADF988D008312E9 /* SettingViewCntroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D55071ADF988D008312E9 /* SettingViewCntroller.swift */; };
+		044D55081ADF988D008312E9 /* ListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D55071ADF988D008312E9 /* ListSettingViewController.swift */; };
 		044D550C1ADFAE37008312E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D550B1ADFAE37008312E9 /* Constants.swift */; };
+		049FAA901B04985100651FC3 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FAA8F1B04985100651FC3 /* SettingViewController.swift */; };
+		049FAA941B05959500651FC3 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049FAA931B05959500651FC3 /* Social.framework */; };
 		04B70FE71A6E96D000FC0377 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B70FE61A6E96D000FC0377 /* Fetcher.swift */; };
 		04B70FEA1A6E994500FC0377 /* RemoteComic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B70FE91A6E994500FC0377 /* RemoteComic.swift */; };
 		04B70FF51A6EACDA00FC0377 /* HTMLScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B70FF41A6EACDA00FC0377 /* HTMLScanner.swift */; };
@@ -52,8 +54,10 @@
 		04445E3B1A5D765900B3C6A0 /* ComicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicCell.swift; sourceTree = "<group>"; };
 		04445E3D1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		04445E3E1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		044D55071ADF988D008312E9 /* SettingViewCntroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewCntroller.swift; sourceTree = "<group>"; };
+		044D55071ADF988D008312E9 /* ListSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSettingViewController.swift; sourceTree = "<group>"; };
 		044D550B1ADFAE37008312E9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		049FAA8F1B04985100651FC3 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		049FAA931B05959500651FC3 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		04B70FE61A6E96D000FC0377 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		04B70FE91A6E994500FC0377 /* RemoteComic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteComic.swift; sourceTree = "<group>"; };
 		04B70FF41A6EACDA00FC0377 /* HTMLScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLScanner.swift; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049FAA941B05959500651FC3 /* Social.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +88,7 @@
 		04445E0A1A5D716500B3C6A0 = {
 			isa = PBXGroup;
 			children = (
+				049FAA931B05959500651FC3 /* Social.framework */,
 				04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */,
 				04445E2E1A5D716600B3C6A0 /* WebMangaAntennaReaderTests */,
 				04445E141A5D716500B3C6A0 /* Products */,
@@ -147,8 +153,9 @@
 			isa = PBXGroup;
 			children = (
 				04445E1D1A5D716500B3C6A0 /* ComicsViewController.swift */,
-				044D55071ADF988D008312E9 /* SettingViewCntroller.swift */,
+				044D55071ADF988D008312E9 /* ListSettingViewController.swift */,
 				043A4CF31AD92C4600FF1009 /* WebViewController.swift */,
+				049FAA8F1B04985100651FC3 /* SettingViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -301,6 +308,7 @@
 			files = (
 				04445E1E1A5D716500B3C6A0 /* ComicsViewController.swift in Sources */,
 				043A4CF41AD92C4600FF1009 /* WebViewController.swift in Sources */,
+				049FAA901B04985100651FC3 /* SettingViewController.swift in Sources */,
 				04B70FEA1A6E994500FC0377 /* RemoteComic.swift in Sources */,
 				04445E3C1A5D765900B3C6A0 /* ComicCell.swift in Sources */,
 				04B70FF51A6EACDA00FC0377 /* HTMLScanner.swift in Sources */,
@@ -311,7 +319,7 @@
 				04B70FF71A6EAD1500FC0377 /* HTMLString.swift in Sources */,
 				04F65F0A1AD3E25900E42BE0 /* Comic.swift in Sources */,
 				04445E191A5D716500B3C6A0 /* AppDelegate.swift in Sources */,
-				044D55081ADF988D008312E9 /* SettingViewCntroller.swift in Sources */,
+				044D55081ADF988D008312E9 /* ListSettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

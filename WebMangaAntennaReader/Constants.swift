@@ -14,11 +14,14 @@ public struct Constants {
     
     public struct UserDefaultsKeys {
         public static let MY_LIST_ID:String = "myListId"
+        public static let UPDATE_CHECK_INTERVAL:String = "updateCheckInterval"
     }
     public struct Seques {
-        public static let SAVE_MY_LIST:String = "saveMyList"
         public static let SHOW_WEB_SITE:String = "showWebSite"
         public static let SHOW_SETTING:String = "showSetting"
+        public static let SHOW_INIT:String = "showInit"
+        public static let UNWIND_SETTING:String = "unwindSetting"
+        public static let UNWIND_LIST_SETTING:String = "unwindListSetting"
     }
     public struct Notifications {
         public static let UPDATE_COMIC:String = "updateComic"

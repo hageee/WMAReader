@@ -8,11 +8,8 @@
 
 import UIKit
 
-class SettingViewController: UIViewController {
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
+class ListSettingViewController: UIViewController {
     @IBOutlet weak var myListIdTextField: UITextField!
-    @IBOutlet var settingRow: UIView!
     
     let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
     
@@ -25,18 +22,6 @@ class SettingViewController: UIViewController {
         myListIdTextField.becomeFirstResponder()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == Constants.Seques.SAVE_MY_LIST) {
-            let ud = NSUserDefaults.standardUserDefaults()
-            let newListId:String = myListIdTextField.text;
-            let oldListId = ud.stringForKey(Constants.UserDefaultsKeys.MY_LIST_ID)
-            ud.setObject(newListId, forKey: Constants.UserDefaultsKeys.MY_LIST_ID)
-            if oldListId != newListId {
-                comicDao.deleteAll()
-            }
-        }
-    }
-
     @IBAction func hideKeyboard(sender: AnyObject) {
         myListIdTextField.resignFirstResponder()
     }
@@ -47,8 +32,16 @@ class SettingViewController: UIViewController {
         }
     }
 
-    @IBAction func cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == Constants.Seques.UNWIND_LIST_SETTING) {
+            let ud = NSUserDefaults.standardUserDefaults()
+            let newListId:String = myListIdTextField.text;
+            let oldListId = ud.stringForKey(Constants.UserDefaultsKeys.MY_LIST_ID)
+            ud.setObject(newListId, forKey: Constants.UserDefaultsKeys.MY_LIST_ID)
+            if oldListId != newListId {
+                comicDao.deleteAll()
+            }
+        }
     }
 
 }
