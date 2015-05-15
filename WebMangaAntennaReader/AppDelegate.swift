@@ -13,25 +13,8 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let BACKGROUND_FETCH_INTERBAL_DEFAULT:Int = 6
-    let HOUR = 3600
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let settings = UIUserNotificationSettings(
-            forTypes: UIUserNotificationType.Badge
-                | UIUserNotificationType.Sound
-                | UIUserNotificationType.Alert,
-            categories: nil)
-        application.registerUserNotificationSettings(settings);
-        
-        let ud = NSUserDefaults.standardUserDefaults()
-        var interval = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
-        if interval <= 0 {
-            interval = BACKGROUND_FETCH_INTERBAL_DEFAULT;
-            ud.setObject(interval, forKey: Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
-        }
-        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(interval * HOUR));
-        
         return true
     }
     

@@ -22,6 +22,7 @@ class SettingViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "設定"
         let version:String = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
         versionLabel.text = version
     }
@@ -41,16 +42,6 @@ class SettingViewController: UITableViewController {
         let ud = NSUserDefaults.standardUserDefaults()
         let updateInterval:Int = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
         interval.text = "\(updateInterval)時間毎";
-    }
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == Constants.Seques.UNWIND_SETTING) {
-            let ud = NSUserDefaults.standardUserDefaults()
-            let intervalHour = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
-            if (intervalHour > 0) {
-                UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(intervalHour * 3600));
-            }
-        }
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -81,6 +72,12 @@ class SettingViewController: UITableViewController {
             alertController.addAction(actionRow)
         }
         let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: nil)
+        // For iPad
+        if let popoverController = alertController.popoverPresentationController {
+            alertController.popoverPresentationController?.sourceView = self.view
+            let frame = UIScreen.mainScreen().applicationFrame
+            alertController.popoverPresentationController?.sourceRect = CGRectMake(CGRectGetMidX(frame) - 90, updateCheckCell.frame.origin.x + 70, 120, 50)
+        }
         alertController.addAction(cancelAction)
         presentViewController(alertController, animated: true, completion: nil)
     }
@@ -118,6 +115,13 @@ class SettingViewController: UITableViewController {
         alertController.addAction(facebookAction)
         let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
+        
+        // For iPad
+        if let popoverController = alertController.popoverPresentationController {
+            alertController.popoverPresentationController?.sourceView = self.view
+            alertController.popoverPresentationController?.sourceRect = CGRectMake(100.0, 100.0, 20.0, 20.0);
+        }
+
         presentViewController(alertController, animated: true, completion: nil)
     }
     

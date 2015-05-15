@@ -15,6 +15,7 @@ class ListSettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "リストの設定"
         let ud = NSUserDefaults.standardUserDefaults()
         if let myListId:String = ud.stringForKey(Constants.UserDefaultsKeys.MY_LIST_ID) {
             myListIdTextField.text = myListId;

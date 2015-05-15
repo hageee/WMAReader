@@ -9,6 +9,8 @@
 import UIKit
 
 class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
+    let HOUR = 3600
+    let BACKGROUND_FETCH_INTERBAL_DEFAULT:Int = 6
     
     private var comics: [Comic] = []
     private var imageCache:Dictionary<String, UIImage>  = Dictionary()
@@ -134,7 +136,21 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         }
     }
     
-    @IBAction func reloadForMyListChangeSegue(seque:UIStoryboardSegue) {
+    @IBAction func applySettings(seque:UIStoryboardSegue) {
         reload()
+        let application = UIApplication.sharedApplication()
+        let settings = UIUserNotificationSettings(
+            forTypes: UIUserNotificationType.Badge
+                | UIUserNotificationType.Sound
+                | UIUserNotificationType.Alert,
+            categories: nil)
+        application.registerUserNotificationSettings(settings);
+        let ud = NSUserDefaults.standardUserDefaults()
+        var interval = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
+        if interval <= 0 {
+            interval = BACKGROUND_FETCH_INTERBAL_DEFAULT;
+            ud.setObject(interval, forKey: Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
+        }
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(interval * HOUR));
     }
 }

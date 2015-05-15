@@ -20,6 +20,9 @@
 		044D550C1ADFAE37008312E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D550B1ADFAE37008312E9 /* Constants.swift */; };
 		049FAA901B04985100651FC3 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FAA8F1B04985100651FC3 /* SettingViewController.swift */; };
 		049FAA941B05959500651FC3 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049FAA931B05959500651FC3 /* Social.framework */; };
+		049FAA981B05DDB000651FC3 /* splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FAA971B05DDB000651FC3 /* splash@2x.png */; };
+		049FAA9C1B05DF6200651FC3 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FAA9A1B05DF6200651FC3 /* splash.png */; };
+		049FAA9D1B05DF6200651FC3 /* splash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049FAA9B1B05DF6200651FC3 /* splash@3x.png */; };
 		04B70FE71A6E96D000FC0377 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B70FE61A6E96D000FC0377 /* Fetcher.swift */; };
 		04B70FEA1A6E994500FC0377 /* RemoteComic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B70FE91A6E994500FC0377 /* RemoteComic.swift */; };
 		04B70FF51A6EACDA00FC0377 /* HTMLScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B70FF41A6EACDA00FC0377 /* HTMLScanner.swift */; };
@@ -58,6 +61,9 @@
 		044D550B1ADFAE37008312E9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		049FAA8F1B04985100651FC3 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		049FAA931B05959500651FC3 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		049FAA971B05DDB000651FC3 /* splash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash@2x.png"; sourceTree = "<group>"; };
+		049FAA9A1B05DF6200651FC3 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
+		049FAA9B1B05DF6200651FC3 /* splash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash@3x.png"; sourceTree = "<group>"; };
 		04B70FE61A6E96D000FC0377 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		04B70FE91A6E994500FC0377 /* RemoteComic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteComic.swift; sourceTree = "<group>"; };
 		04B70FF41A6EACDA00FC0377 /* HTMLScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLScanner.swift; sourceTree = "<group>"; };
@@ -127,6 +133,7 @@
 		04445E161A5D716500B3C6A0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				049FAA991B05DDD300651FC3 /* assets */,
 				04445E171A5D716500B3C6A0 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -166,6 +173,16 @@
 				04445E3B1A5D765900B3C6A0 /* ComicCell.swift */,
 			);
 			name = Widgets;
+			sourceTree = "<group>";
+		};
+		049FAA991B05DDD300651FC3 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				049FAA9A1B05DF6200651FC3 /* splash.png */,
+				049FAA9B1B05DF6200651FC3 /* splash@3x.png */,
+				049FAA971B05DDB000651FC3 /* splash@2x.png */,
+			);
+			name = assets;
 			sourceTree = "<group>";
 		};
 		04B70FE51A6E969E00FC0377 /* HTTP */ = {
@@ -287,8 +304,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				04445E211A5D716500B3C6A0 /* Main.storyboard in Resources */,
+				049FAA981B05DDB000651FC3 /* splash@2x.png in Resources */,
 				04445E261A5D716500B3C6A0 /* LaunchScreen.xib in Resources */,
 				04445E231A5D716500B3C6A0 /* Images.xcassets in Resources */,
+				049FAA9D1B05DF6200651FC3 /* splash@3x.png in Resources */,
+				049FAA9C1B05DF6200651FC3 /* splash.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
