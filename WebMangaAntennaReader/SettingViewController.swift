@@ -126,7 +126,7 @@ class SettingViewController: UITableViewController {
     }
     
     private func showReview() {
-        if let url = NSURL(string:"http://www.apple.com") {
+        if let url = NSURL(string:"https://itunes.apple.com/us/app/web-man-huaantenarida/id997210763?l=ja&ls=1&mt=8") {
             UIApplication.sharedApplication().openURL(url)
         }
     }
