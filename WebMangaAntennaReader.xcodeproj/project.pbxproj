@@ -14,7 +14,6 @@
 		04445E211A5D716500B3C6A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04445E1F1A5D716500B3C6A0 /* Main.storyboard */; };
 		04445E231A5D716500B3C6A0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04445E221A5D716500B3C6A0 /* Images.xcassets */; };
 		04445E261A5D716500B3C6A0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04445E241A5D716500B3C6A0 /* LaunchScreen.xib */; };
-		04445E321A5D716600B3C6A0 /* WebMangaAntennaReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E311A5D716600B3C6A0 /* WebMangaAntennaReaderTests.swift */; };
 		04445E3C1A5D765900B3C6A0 /* ComicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E3B1A5D765900B3C6A0 /* ComicCell.swift */; };
 		044D55081ADF988D008312E9 /* ListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D55071ADF988D008312E9 /* ListSettingViewController.swift */; };
 		044D550C1ADFAE37008312E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D550B1ADFAE37008312E9 /* Constants.swift */; };
@@ -31,16 +30,6 @@
 		04F65F0C1AD3E29A00E42BE0 /* ComicDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F65F0B1AD3E29A00E42BE0 /* ComicDao.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		04445E2C1A5D716600B3C6A0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04445E0B1A5D716500B3C6A0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 04445E121A5D716500B3C6A0;
-			remoteInfo = WebMangaAntennaReader;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		043A4CF31AD92C4600FF1009 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		04445E131A5D716500B3C6A0 /* WebMangaAntennaReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebMangaAntennaReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,9 +40,6 @@
 		04445E201A5D716500B3C6A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04445E221A5D716500B3C6A0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		04445E251A5D716500B3C6A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		04445E2B1A5D716600B3C6A0 /* WebMangaAntennaReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebMangaAntennaReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		04445E301A5D716600B3C6A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04445E311A5D716600B3C6A0 /* WebMangaAntennaReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebMangaAntennaReaderTests.swift; sourceTree = "<group>"; };
 		04445E3B1A5D765900B3C6A0 /* ComicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicCell.swift; sourceTree = "<group>"; };
 		04445E3D1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		04445E3E1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -81,13 +67,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		04445E281A5D716600B3C6A0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -96,7 +75,6 @@
 			children = (
 				049FAA931B05959500651FC3 /* Social.framework */,
 				04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */,
-				04445E2E1A5D716600B3C6A0 /* WebMangaAntennaReaderTests */,
 				04445E141A5D716500B3C6A0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				04445E131A5D716500B3C6A0 /* WebMangaAntennaReader.app */,
-				04445E2B1A5D716600B3C6A0 /* WebMangaAntennaReaderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,23 +112,6 @@
 			children = (
 				049FAA991B05DDD300651FC3 /* assets */,
 				04445E171A5D716500B3C6A0 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		04445E2E1A5D716600B3C6A0 /* WebMangaAntennaReaderTests */ = {
-			isa = PBXGroup;
-			children = (
-				04445E311A5D716600B3C6A0 /* WebMangaAntennaReaderTests.swift */,
-				04445E2F1A5D716600B3C6A0 /* Supporting Files */,
-			);
-			path = WebMangaAntennaReaderTests;
-			sourceTree = "<group>";
-		};
-		04445E2F1A5D716600B3C6A0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				04445E301A5D716600B3C6A0 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -239,31 +199,15 @@
 			productReference = 04445E131A5D716500B3C6A0 /* WebMangaAntennaReader.app */;
 			productType = "com.apple.product-type.application";
 		};
-		04445E2A1A5D716600B3C6A0 /* WebMangaAntennaReaderTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 04445E381A5D716600B3C6A0 /* Build configuration list for PBXNativeTarget "WebMangaAntennaReaderTests" */;
-			buildPhases = (
-				04445E271A5D716600B3C6A0 /* Sources */,
-				04445E281A5D716600B3C6A0 /* Frameworks */,
-				04445E291A5D716600B3C6A0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				04445E2D1A5D716600B3C6A0 /* PBXTargetDependency */,
-			);
-			name = WebMangaAntennaReaderTests;
-			productName = WebMangaAntennaReaderTests;
-			productReference = 04445E2B1A5D716600B3C6A0 /* WebMangaAntennaReaderTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		04445E0B1A5D716500B3C6A0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Takashi Hagura";
 				TargetAttributes = {
 					04445E121A5D716500B3C6A0 = {
@@ -274,10 +218,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					04445E2A1A5D716600B3C6A0 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 04445E121A5D716500B3C6A0;
 					};
 				};
 			};
@@ -294,7 +234,6 @@
 			projectRoot = "";
 			targets = (
 				04445E121A5D716500B3C6A0 /* WebMangaAntennaReader */,
-				04445E2A1A5D716600B3C6A0 /* WebMangaAntennaReaderTests */,
 			);
 		};
 /* End PBXProject section */
@@ -310,13 +249,6 @@
 				04445E231A5D716500B3C6A0 /* Images.xcassets in Resources */,
 				049FAA9D1B05DF6200651FC3 /* splash@3x.png in Resources */,
 				049FAA9C1B05DF6200651FC3 /* splash.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		04445E291A5D716600B3C6A0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,23 +276,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		04445E271A5D716600B3C6A0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				04445E321A5D716600B3C6A0 /* WebMangaAntennaReaderTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		04445E2D1A5D716600B3C6A0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 04445E121A5D716500B3C6A0 /* WebMangaAntennaReader */;
-			targetProxy = 04445E2C1A5D716600B3C6A0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		04445E1F1A5D716500B3C6A0 /* Main.storyboard */ = {
@@ -404,6 +320,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -483,12 +400,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-				);
 				INFOPLIST_FILE = WebMangaAntennaReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.takashi8.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -501,49 +415,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-				);
 				INFOPLIST_FILE = WebMangaAntennaReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.takashi8.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-			};
-			name = Release;
-		};
-		04445E391A5D716600B3C6A0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = WebMangaAntennaReaderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WebMangaAntennaReader.app/WebMangaAntennaReader";
-			};
-			name = Debug;
-		};
-		04445E3A1A5D716600B3C6A0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = WebMangaAntennaReaderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WebMangaAntennaReader.app/WebMangaAntennaReader";
 			};
 			name = Release;
 		};
@@ -564,15 +441,6 @@
 			buildConfigurations = (
 				04445E361A5D716600B3C6A0 /* Debug */,
 				04445E371A5D716600B3C6A0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		04445E381A5D716600B3C6A0 /* Build configuration list for PBXNativeTarget "WebMangaAntennaReaderTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				04445E391A5D716600B3C6A0 /* Debug */,
-				04445E3A1A5D716600B3C6A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -34,13 +34,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     private func showIndicator() {
         indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        indicator.map {(i) -> Void in
-            i.frame = CGRectMake(0, 0, 48, 48)
-            i.center = self.view.center;
-            i.hidesWhenStopped = true;
-            i.startAnimating()
-            self.view.addSubview(i)
-        }
+        indicator?.frame = CGRectMake(0, 0, 48, 48)
+        indicator?.center = self.view.center;
+        indicator?.hidesWhenStopped = true;
+        indicator?.startAnimating()
+        self.view.addSubview(indicator!)
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
@@ -65,7 +63,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         let openSafari:UIAlertAction = UIAlertAction(title: "Sarafiで開く",
             style: UIAlertActionStyle.Default,
             handler:{
-                (action:UIAlertAction!) -> Void in
+                (action:UIAlertAction) -> Void in
                 if let urlStr:String = self._comic?.url {
                     if let url = NSURL(string: urlStr) {
                     UIApplication.sharedApplication().openURL(url)
@@ -76,7 +74,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         let cancel:UIAlertAction = UIAlertAction(title: "キャンセル",
             style: UIAlertActionStyle.Cancel,
             handler:{
-                (action:UIAlertAction!) -> Void in
+                (action:UIAlertAction) -> Void in
         })
         alert.addAction(openSafari)
         alert.addAction(cancel)

@@ -61,7 +61,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
 
     private func showListAlert(title:String?, message: String?) {
         self.refreshControl?.endRefreshing()
-        var alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { action in
             self.performSegueWithIdentifier(Constants.Seques.SHOW_INIT, sender: self)
         }
@@ -71,7 +71,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)        
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
+        if let indexPath = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
     }
@@ -89,14 +89,14 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         let cell: ComicCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! ComicCell
         let comic: Comic = self.comics[indexPath.row] as Comic
 
-        var imageUrl: String? = comic.valueForKey("thumb") as? String
+        let imageUrl: String? = comic.valueForKey("thumb") as? String
         cell.titleLabel.text = comic.valueForKey("title") as? String
         cell.updateTimeLabel.text = comic.valueForKey("updatedAt") as? String
         cell.siteNameLabel.text = comic.valueForKey("siteName") as? String
         cell.comicImageView.image = nil
         
-        var q_global: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        var q_main: dispatch_queue_t  = dispatch_get_main_queue();
+        let q_global: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        let q_main: dispatch_queue_t  = dispatch_get_main_queue();
         
         dispatch_async(q_global, {
             if let href = imageUrl {
@@ -128,7 +128,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == Constants.Seques.SHOW_WEB_SITE) {
-            if let row:NSIndexPath = self.tableView.indexPathForSelectedRow() {
+            if let row:NSIndexPath = self.tableView.indexPathForSelectedRow {
                 let comic: Comic = self.comics[row.row] as Comic
                 let webView:WebViewController = segue.destinationViewController as! WebViewController
                 webView.comic = comic
@@ -140,9 +140,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         reload()
         let application = UIApplication.sharedApplication()
         let settings = UIUserNotificationSettings(
-            forTypes: UIUserNotificationType.Badge
-                | UIUserNotificationType.Sound
-                | UIUserNotificationType.Alert,
+            forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Sound, UIUserNotificationType.Alert],
             categories: nil)
         application.registerUserNotificationSettings(settings);
         let ud = NSUserDefaults.standardUserDefaults()

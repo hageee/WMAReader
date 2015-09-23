@@ -52,16 +52,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func notify(comics:[Comic]) {
-        if count(comics) == 0 { return }
+        if comics.count == 0 { return }
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         let topComic = comics[0]
-        var notification = UILocalNotification()
+        let notification = UILocalNotification()
         notification.fireDate = NSDate()	// すぐに通知したいので現在時刻を取得
         notification.timeZone = NSTimeZone.defaultTimeZone()
-        if count(comics) == 1 {
+        if comics.count == 1 {
             notification.alertBody = String(format: "「%@」が更新されました！", arguments: [topComic.title])
         } else {
-            let numOfComics:String = String(count(comics) - 1)
+            let numOfComics:String = String(comics.count - 1)
             notification.alertBody = String(format: "「%@」他、%@本の漫画が更新されました！", arguments: [topComic.title, numOfComics])
         }
         notification.alertAction = "OK"
@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "net.takashi8.TestCoreDate" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
         }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -115,7 +115,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("TestCoreDate.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        } catch var error1 as NSError {
+            error = error1
             coordinator = nil
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -127,6 +130,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+        } catch {
+            fatalError()
         }
         
         return coordinator
@@ -148,11 +153,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func saveContext () {
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if moc.hasChanges {
+                do {
+                    try moc.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }

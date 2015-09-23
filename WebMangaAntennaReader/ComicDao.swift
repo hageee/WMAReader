@@ -55,11 +55,13 @@ public class ComicDao {
             req.entity = entityDiscription
             req.predicate = NSPredicate(format: "url = %@", url)
             
-            var error: NSError? = nil;
-            if let results = context.executeFetchRequest(req, error: &error) {
+            do {
+                let results = try context.executeFetchRequest(req)
                 if results.count > 0 {
                     return results.first as? Comic
                 }
+            } catch let error as NSError {
+                NSLog("%@ %@", error, error.userInfo)
             }
         }
         return nil
@@ -70,10 +72,13 @@ public class ComicDao {
             let entityDiscription = NSEntityDescription.entityForName("Comic", inManagedObjectContext: managedObjectContext);
             let fetchRequest = NSFetchRequest();
             fetchRequest.entity = entityDiscription;
-            var error: NSError? = nil;
-            if var results = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [Comic] {
-                results.sort(sortByNewer)
-                return results
+            do {
+                if var results = try managedObjectContext.executeFetchRequest(fetchRequest) as? [Comic] {
+                    results.sortInPlace(sortByNewer)
+                    return results
+                }
+            } catch let error as NSError {
+                NSLog("%@ %@", error, error.userInfo)
             }
         }
         return [Comic]()
@@ -85,10 +90,13 @@ public class ComicDao {
             let req = NSFetchRequest();
             req.entity = entityDiscription;
             req.predicate = NSPredicate(format: "willNotify = %@", NSNumber(bool: true))
-            var error: NSError? = nil;
-            if var results = managedObjectContext.executeFetchRequest(req, error: &error) as? [Comic] {
-                results.sort(sortByNewer)
-                return results
+            do {
+                if var results = try managedObjectContext.executeFetchRequest(req) as? [Comic] {
+                    results.sortInPlace(sortByNewer)
+                    return results
+                }
+            } catch let error as NSError {
+                NSLog("%@ %@", error, error.userInfo)
             }
         }
         return [Comic]()
@@ -97,7 +105,7 @@ public class ComicDao {
     func deleteAll() {
         if let context: NSManagedObjectContext = appDelegate.managedObjectContext {
             let request = NSFetchRequest(entityName: "Comic")
-            if let comics:[NSManagedObject] = context.executeFetchRequest(request, error: nil) as? [NSManagedObject] {
+            if let comics:[NSManagedObject] = (try? context.executeFetchRequest(request)) as? [NSManagedObject] {
                 for c in comics {
                     context.deleteObject(c)
                 }
@@ -107,7 +115,7 @@ public class ComicDao {
     }
 
     private func getHour(src: String) -> Int {
-        if let hour = src.stringByReplacingOccurrencesOfString("時間前", withString: "", options: nil, range: nil).toInt() {
+        if let hour = Int(src.stringByReplacingOccurrencesOfString("時間前", withString: "", options: [], range: nil)) {
             return hour
         } else {
             return 0
@@ -115,7 +123,7 @@ public class ComicDao {
     }
     
     private func getMinutes(src: String) -> Int {
-        if let hour = src.stringByReplacingOccurrencesOfString("分前", withString: "", options: nil, range: nil).toInt() {
+        if let hour = Int(src.stringByReplacingOccurrencesOfString("分前", withString: "", options: [], range: nil)) {
             return hour
         } else {
             return 0

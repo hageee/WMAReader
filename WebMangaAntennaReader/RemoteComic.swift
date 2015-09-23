@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc(RemoteComic) public class RemoteComic: NSObject, NSCoding, Equatable {
+public class RemoteComic: NSObject, NSCoding {
     
     public var thumb: String?
     public var date: String?
@@ -46,7 +46,7 @@ import Foundation
         self.parseHTML(html)
     }
     
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init()
         
         for key in serialization.values {
@@ -78,7 +78,7 @@ public extension RemoteComic {
         Fetcher.Fetch(ressource,
             parsing: {(html) in
                 if let realHtml = html {
-                    var RemoteComics = self.parseCollectionHTML(realHtml)
+                    let RemoteComics = self.parseCollectionHTML(realHtml)
                     return RemoteComics
                 }
                 else {
@@ -100,7 +100,7 @@ public extension RemoteComic {
 internal extension RemoteComic {
     
     internal class func parseCollectionHTML(html: String) -> [RemoteComic] {
-        var components = html.componentsSeparatedByString("<div class=\"entry\">")
+        let components = html.componentsSeparatedByString("<div class=\"entry\">")
         var RemoteComics: [RemoteComic] = []
         if (components.count > 0) {
             var index = 0
@@ -115,16 +115,16 @@ internal extension RemoteComic {
     }
     
     internal func parseHTML(html: String) {
-        var scanner = NSScanner(string: html)
+        let scanner = NSScanner(string: html)
         
         self.thumb = scanner.scanTag("target=\"_blank\"><img src=\"", endTag: "\" width=")
         self.date = scanner.scanTag("<div class=\"entry-date\">", endTag: "</div>")
         
-        var titleLink = scanner.scanTag("<div class=\"entry-title\">", endTag: "</div>")
+        let titleLink = scanner.scanTag("<div class=\"entry-title\">", endTag: "</div>")
         self.title = String.stringByRemovingHTMLEntities(titleLink)
         self.url = String.stringByHrefAttribute(titleLink)
         
-        var siteLink = scanner.scanTag("<div class=\"entry-site\">", endTag: "</div>")
+        let siteLink = scanner.scanTag("<div class=\"entry-site\">", endTag: "</div>")
         self.siteName = String.stringByRemovingHTMLEntities(siteLink)
         self.siteUrl = String.stringByHrefAttribute(siteLink)
     }

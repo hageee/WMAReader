@@ -61,7 +61,7 @@ class SettingViewController: UITableViewController {
     }
 
     private func showIntervalSelection() {
-        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         for hour in SettingViewController.INTERVALS {
             let actionRow = UIAlertAction(title: "\(hour)時間毎", style: .Default) { action in
                 let ud = NSUserDefaults.standardUserDefaults()
@@ -86,7 +86,7 @@ class SettingViewController: UITableViewController {
         // availability check
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
             // make controller to share on twitter
-            var controller = SLComposeViewController(forServiceType: type)
+            let controller = SLComposeViewController(forServiceType: type)
             
             // add link to the controller
             let link: String = "http://www.apple.com"
@@ -103,7 +103,7 @@ class SettingViewController: UITableViewController {
     }
     
     private func showRecommendSelection() {
-        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         let twitterAction = UIAlertAction(title: "Twitter", style: .Default) { action in
             self.showSocialComposeView(SLServiceTypeTwitter)

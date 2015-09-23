@@ -26,15 +26,15 @@ extension String {
         result = result.stringByReplacingOccurrencesOfString("<pre><code>", withString: "", options: .CaseInsensitiveSearch, range: nil)
         result = result.stringByReplacingOccurrencesOfString("</code></pre>", withString: "", options: .CaseInsensitiveSearch, range: nil)
         
-        var regex = NSRegularExpression(pattern: "<a[^>]+href=\".*?\"[^>]*>(.*?)</a>", options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!
-        result = regex.stringByReplacingMatchesInString(result, options: nil, range: NSMakeRange(0, count(result.utf16)), withTemplate: "$1")
+        let regex = try! NSRegularExpression(pattern: "<a[^>]+href=\".*?\"[^>]*>(.*?)</a>", options: NSRegularExpressionOptions.CaseInsensitive)
+        result = regex.stringByReplacingMatchesInString(result, options: [], range: NSMakeRange(0, result.utf16.count), withTemplate: "$1")
         
         return result
     }
     
     static func stringByHrefAttribute(string: String) -> String {
-        var regex = NSRegularExpression(pattern: "<a[^>]+href=\"(.*?)\"[^>]*>.*?</a>", options: NSRegularExpressionOptions.CaseInsensitive, error: nil)!
-        var result = regex.stringByReplacingMatchesInString(string, options: nil, range: NSMakeRange(0, count(string.utf16)), withTemplate: "$1")
+        let regex = try! NSRegularExpression(pattern: "<a[^>]+href=\"(.*?)\"[^>]*>.*?</a>", options: NSRegularExpressionOptions.CaseInsensitive)
+        let result = regex.stringByReplacingMatchesInString(string, options: [], range: NSMakeRange(0, string.utf16.count), withTemplate: "$1")
         return result
     }
     

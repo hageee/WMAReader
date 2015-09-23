@@ -36,7 +36,7 @@ class ListSettingViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == Constants.Seques.UNWIND_LIST_SETTING) {
             let ud = NSUserDefaults.standardUserDefaults()
-            let newListId:String = myListIdTextField.text;
+            let newListId:String = myListIdTextField.text!;
             let oldListId = ud.stringForKey(Constants.UserDefaultsKeys.MY_LIST_ID)
             ud.setObject(newListId, forKey: Constants.UserDefaultsKeys.MY_LIST_ID)
             if oldListId != newListId {

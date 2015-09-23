@@ -34,12 +34,12 @@ public class Fetcher {
         
         self.showLoadingIndicator(true)
         
-        var path = _Fetcher.baseURL + ressource
-        var task = _Fetcher.session.dataTaskWithURL(NSURL(string: path)! , completionHandler: {(data: NSData!, response, error: NSError!) in
+        let path = _Fetcher.baseURL + ressource
+        let task = _Fetcher.session.dataTaskWithURL(NSURL(string: path)! , completionHandler: {(data: NSData?, response, error: NSError?) in
             if !(error != nil) {
                 if let realData = data {
                     let html = NSString(data: realData, encoding: NSUTF8StringEncoding) as! String
-                    var object: AnyObject! = parsing(html: html)
+                    let object: AnyObject! = parsing(html: html)
 
                     dispatch_async(dispatch_get_main_queue(), { ()->() in
                         self.showLoadingIndicator(false)
