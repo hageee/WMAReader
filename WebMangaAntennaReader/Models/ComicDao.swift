@@ -23,7 +23,6 @@ public class ComicDao {
                 let managedObject: AnyObject = NSEntityDescription.insertNewObjectForEntityForName("Comic", inManagedObjectContext: managedObjectContext)
                 comic = managedObject as? Comic
             }
-            let oldUpdatedAt:String? = comic?.valueForKey("updatedAt") as? String
             // エンティティモデルにデータをセット
             comic?.siteName = remoteComic.siteName!
             comic?.siteUrl = remoteComic.siteUrl!
@@ -31,11 +30,7 @@ public class ComicDao {
             comic?.title = remoteComic.title!
             comic?.updatedAt = remoteComic.date!
             comic?.url = remoteComic.url!
-            if oldUpdatedAt == nil || oldUpdatedAt?.hasSuffix("時間前") == true  || oldUpdatedAt >= comic?.updatedAt {
-                comic?.willNotify = false
-            } else {
-                comic?.willNotify = true
-            }
+            comic?.willNotify = false
             appDelegate.saveContext()
             return comic
         }
@@ -43,7 +38,7 @@ public class ComicDao {
     }
     
     func save(comic:Comic) {
-        if let managedObjectContext = appDelegate.managedObjectContext {
+        if let _ = appDelegate.managedObjectContext {
             appDelegate.saveContext()
         }
     }
@@ -74,24 +69,6 @@ public class ComicDao {
             fetchRequest.entity = entityDiscription;
             do {
                 if var results = try managedObjectContext.executeFetchRequest(fetchRequest) as? [Comic] {
-                    results.sortInPlace(sortByNewer)
-                    return results
-                }
-            } catch let error as NSError {
-                NSLog("%@ %@", error, error.userInfo)
-            }
-        }
-        return [Comic]()
-    }
-    
-    func findWillNotify() -> [Comic]? {
-        if let managedObjectContext = appDelegate.managedObjectContext {
-            let entityDiscription = NSEntityDescription.entityForName("Comic", inManagedObjectContext: managedObjectContext);
-            let req = NSFetchRequest();
-            req.entity = entityDiscription;
-            req.predicate = NSPredicate(format: "willNotify = %@", NSNumber(bool: true))
-            do {
-                if var results = try managedObjectContext.executeFetchRequest(req) as? [Comic] {
                     results.sortInPlace(sortByNewer)
                     return results
                 }

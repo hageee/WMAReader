@@ -71,11 +71,19 @@ public func ==(larg: RemoteComic, rarg: RemoteComic) -> Bool {
 //MARK: Network
 public extension RemoteComic {
     
-    typealias Response = (RemoteComics: [RemoteComic]!, error: Fetcher.ResponseError!, local: Bool) -> Void
+    public typealias CompletationCallback = (remoteComics: [RemoteComic]!, error: Fetcher.ResponseError!, local: Bool) -> Void
     
-    public class func fetch(forList listId: String, completion: Response) {
-        let ressource = "list/" + listId
-        Fetcher.Fetch(ressource,
+    public class func fetch(forList listId: String, completion: CompletationCallback) {
+        fetch("/list/" + listId, completion: completion)
+    }
+    
+    public class func fetchBookmark(completion: CompletationCallback) {
+        fetch("/bookmark", completion: completion)
+        
+    }
+    
+    private class func fetch(path: String, completion: CompletationCallback) {
+        Fetcher.Fetch(Constants.WEB_MANGA_ANTENNA_URL + path,
             parsing: {(html) in
                 if let realHtml = html {
                     let RemoteComics = self.parseCollectionHTML(realHtml)
@@ -87,10 +95,10 @@ public extension RemoteComic {
             },
             completion: {(object, error, local) in
                 if let realObject: AnyObject = object {
-                    completion(RemoteComics: realObject as! [RemoteComic], error: error, local: local)
+                    completion(remoteComics: realObject as! [RemoteComic], error: error, local: local)
                 }
                 else {
-                    completion(RemoteComics: nil, error: error, local: local)
+                    completion(remoteComics: [], error: error, local: local)
                 }
         })
     }
@@ -116,7 +124,6 @@ internal extension RemoteComic {
     
     internal func parseHTML(html: String) {
         let scanner = NSScanner(string: html)
-        
         self.thumb = scanner.scanTag("target=\"_blank\"><img src=\"", endTag: "\" width=")
         self.date = scanner.scanTag("<div class=\"entry-date\">", endTag: "</div>")
         

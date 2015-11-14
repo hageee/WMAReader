@@ -13,7 +13,6 @@ private let _Fetcher = Fetcher()
 
 public class Fetcher {
     
-    internal let baseURL = Constants.WEB_MANGA_ANTENNA_URL
     private let session = NSURLSession.sharedSession()
     
     public typealias FetchCompletion = (object: AnyObject!, error: ResponseError!, local: Bool) -> Void
@@ -34,8 +33,7 @@ public class Fetcher {
         
         self.showLoadingIndicator(true)
         
-        let path = _Fetcher.baseURL + ressource
-        let task = _Fetcher.session.dataTaskWithURL(NSURL(string: path)! , completionHandler: {(data: NSData?, response, error: NSError?) in
+        let task = _Fetcher.session.dataTaskWithURL(NSURL(string: ressource)! , completionHandler: {(data: NSData?, response, error: NSError?) in
             if !(error != nil) {
                 if let realData = data {
                     let html = NSString(data: realData, encoding: NSUTF8StringEncoding) as! String

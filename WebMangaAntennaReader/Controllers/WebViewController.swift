@@ -14,6 +14,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var actionButton: UIBarButtonItem!
     
     private var _comic:Comic? = nil
+    private var _url:String? = nil
     private var indicator:UIActivityIndicatorView? = nil
     
     var comic: Comic? {
@@ -41,12 +42,13 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         self.view.addSubview(indicator!)
     }
     
+    // UIWebViewDelegate
     func webViewDidFinishLoad(webView: UIWebView) {
         indicator?.stopAnimating()
     }
     
     private func loadURL() {
-        if let urlStr:String = _comic?.url {
+        if let urlStr:String = _comic?.url == nil ? _url : _comic?.url  {
             if let url = NSURL(string: urlStr) {
                 let req = NSURLRequest(URL: url)
                 webView.loadRequest(req)

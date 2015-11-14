@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0401F1B71C02E4860054EBB1 /* BackgroudFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0401F1B61C02E4860054EBB1 /* BackgroudFetcher.swift */; };
 		043A4CF41AD92C4600FF1009 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A4CF31AD92C4600FF1009 /* WebViewController.swift */; };
 		04445E191A5D716500B3C6A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E181A5D716500B3C6A0 /* AppDelegate.swift */; };
 		04445E1C1A5D716500B3C6A0 /* WebMangaAntennaReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04445E1A1A5D716500B3C6A0 /* WebMangaAntennaReader.xcdatamodeld */; };
@@ -15,6 +16,7 @@
 		04445E231A5D716500B3C6A0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04445E221A5D716500B3C6A0 /* Images.xcassets */; };
 		04445E261A5D716500B3C6A0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04445E241A5D716500B3C6A0 /* LaunchScreen.xib */; };
 		04445E3C1A5D765900B3C6A0 /* ComicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E3B1A5D765900B3C6A0 /* ComicCell.swift */; };
+		0447791D1BF7291F00F65A32 /* WebEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447791C1BF7291F00F65A32 /* WebEditController.swift */; };
 		044D55081ADF988D008312E9 /* ListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D55071ADF988D008312E9 /* ListSettingViewController.swift */; };
 		044D550C1ADFAE37008312E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D550B1ADFAE37008312E9 /* Constants.swift */; };
 		049FAA901B04985100651FC3 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FAA8F1B04985100651FC3 /* SettingViewController.swift */; };
@@ -28,9 +30,11 @@
 		04B70FF71A6EAD1500FC0377 /* HTMLString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B70FF61A6EAD1500FC0377 /* HTMLString.swift */; };
 		04F65F0A1AD3E25900E42BE0 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F65F091AD3E25900E42BE0 /* Comic.swift */; };
 		04F65F0C1AD3E29A00E42BE0 /* ComicDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F65F0B1AD3E29A00E42BE0 /* ComicDao.swift */; };
+		04F70ECC1C031E580070726C /* CookiePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F70ECB1C031E580070726C /* CookiePersistenceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0401F1B61C02E4860054EBB1 /* BackgroudFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroudFetcher.swift; sourceTree = "<group>"; };
 		043A4CF31AD92C4600FF1009 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		04445E131A5D716500B3C6A0 /* WebMangaAntennaReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebMangaAntennaReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04445E171A5D716500B3C6A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -41,8 +45,9 @@
 		04445E221A5D716500B3C6A0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		04445E251A5D716500B3C6A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		04445E3B1A5D765900B3C6A0 /* ComicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicCell.swift; sourceTree = "<group>"; };
-		04445E3D1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		04445E3E1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		04445E3D1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.storyboard; sourceTree = "<group>"; };
+		04445E3E1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		0447791C1BF7291F00F65A32 /* WebEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebEditController.swift; sourceTree = "<group>"; };
 		044D55071ADF988D008312E9 /* ListSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSettingViewController.swift; sourceTree = "<group>"; };
 		044D550B1ADFAE37008312E9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		049FAA8F1B04985100651FC3 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +61,7 @@
 		04B70FF61A6EAD1500FC0377 /* HTMLString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLString.swift; sourceTree = "<group>"; };
 		04F65F091AD3E25900E42BE0 /* Comic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
 		04F65F0B1AD3E29A00E42BE0 /* ComicDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicDao.swift; sourceTree = "<group>"; };
+		04F70ECB1C031E580070726C /* CookiePersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookiePersistenceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +79,10 @@
 		04445E0A1A5D716500B3C6A0 = {
 			isa = PBXGroup;
 			children = (
-				049FAA931B05959500651FC3 /* Social.framework */,
-				04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */,
+				8F2BED88D7DDE3ECBD927946 /* Frameworks */,
 				04445E141A5D716500B3C6A0 /* Products */,
+				04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */,
+				049FAA931B05959500651FC3 /* Social.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,19 +97,20 @@
 		04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */ = {
 			isa = PBXGroup;
 			children = (
-				04B70FF81A7C4F0B00FC0377 /* test */,
 				044D55091ADF98A3008312E9 /* Controllers */,
-				04B70FE81A6E990300FC0377 /* Models */,
-				044D550A1ADF98E7008312E9 /* Widgets */,
 				04B70FF31A6EACB700FC0377 /* Extentions */,
 				04B70FE51A6E969E00FC0377 /* HTTP */,
+				04B70FE81A6E990300FC0377 /* Models */,
+				04445E161A5D716500B3C6A0 /* Supporting Files */,
+				044D550A1ADF98E7008312E9 /* Widgets */,
+				04B70FF81A7C4F0B00FC0377 /* test */,
 				04445E181A5D716500B3C6A0 /* AppDelegate.swift */,
+				0401F1B61C02E4860054EBB1 /* BackgroudFetcher.swift */,
 				044D550B1ADFAE37008312E9 /* Constants.swift */,
 				04445E221A5D716500B3C6A0 /* Images.xcassets */,
 				04445E241A5D716500B3C6A0 /* LaunchScreen.xib */,
 				04445E1F1A5D716500B3C6A0 /* Main.storyboard */,
 				04445E1A1A5D716500B3C6A0 /* WebMangaAntennaReader.xcdatamodeld */,
-				04445E161A5D716500B3C6A0 /* Supporting Files */,
 			);
 			path = WebMangaAntennaReader;
 			sourceTree = "<group>";
@@ -113,7 +121,7 @@
 				049FAA991B05DDD300651FC3 /* assets */,
 				04445E171A5D716500B3C6A0 /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		044D55091ADF98A3008312E9 /* Controllers */ = {
@@ -121,10 +129,11 @@
 			children = (
 				04445E1D1A5D716500B3C6A0 /* ComicsViewController.swift */,
 				044D55071ADF988D008312E9 /* ListSettingViewController.swift */,
-				043A4CF31AD92C4600FF1009 /* WebViewController.swift */,
 				049FAA8F1B04985100651FC3 /* SettingViewController.swift */,
+				0447791C1BF7291F00F65A32 /* WebEditController.swift */,
+				043A4CF31AD92C4600FF1009 /* WebViewController.swift */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		044D550A1ADF98E7008312E9 /* Widgets */ = {
@@ -132,26 +141,27 @@
 			children = (
 				04445E3B1A5D765900B3C6A0 /* ComicCell.swift */,
 			);
-			name = Widgets;
+			path = Widgets;
 			sourceTree = "<group>";
 		};
 		049FAA991B05DDD300651FC3 /* assets */ = {
 			isa = PBXGroup;
 			children = (
 				049FAA9A1B05DF6200651FC3 /* splash.png */,
-				049FAA9B1B05DF6200651FC3 /* splash@3x.png */,
 				049FAA971B05DDB000651FC3 /* splash@2x.png */,
+				049FAA9B1B05DF6200651FC3 /* splash@3x.png */,
 			);
-			name = assets;
+			path = assets;
 			sourceTree = "<group>";
 		};
 		04B70FE51A6E969E00FC0377 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
-				04B70FE91A6E994500FC0377 /* RemoteComic.swift */,
 				04B70FE61A6E96D000FC0377 /* Fetcher.swift */,
+				04B70FE91A6E994500FC0377 /* RemoteComic.swift */,
+				04F70ECB1C031E580070726C /* CookiePersistenceManager.swift */,
 			);
-			name = HTTP;
+			path = HTTP;
 			sourceTree = "<group>";
 		};
 		04B70FE81A6E990300FC0377 /* Models */ = {
@@ -160,7 +170,7 @@
 				04F65F091AD3E25900E42BE0 /* Comic.swift */,
 				04F65F0B1AD3E29A00E42BE0 /* ComicDao.swift */,
 			);
-			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		04B70FF31A6EACB700FC0377 /* Extentions */ = {
@@ -169,7 +179,7 @@
 				04B70FF41A6EACDA00FC0377 /* HTMLScanner.swift */,
 				04B70FF61A6EAD1500FC0377 /* HTMLString.swift */,
 			);
-			name = Extentions;
+			path = Extentions;
 			sourceTree = "<group>";
 		};
 		04B70FF81A7C4F0B00FC0377 /* test */ = {
@@ -177,6 +187,13 @@
 			children = (
 			);
 			path = test;
+			sourceTree = "<group>";
+		};
+		8F2BED88D7DDE3ECBD927946 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,7 +278,10 @@
 			files = (
 				04445E1E1A5D716500B3C6A0 /* ComicsViewController.swift in Sources */,
 				043A4CF41AD92C4600FF1009 /* WebViewController.swift in Sources */,
+				0447791D1BF7291F00F65A32 /* WebEditController.swift in Sources */,
 				049FAA901B04985100651FC3 /* SettingViewController.swift in Sources */,
+				04F70ECC1C031E580070726C /* CookiePersistenceManager.swift in Sources */,
+				0401F1B71C02E4860054EBB1 /* BackgroudFetcher.swift in Sources */,
 				04B70FEA1A6E994500FC0377 /* RemoteComic.swift in Sources */,
 				04445E3C1A5D765900B3C6A0 /* ComicCell.swift in Sources */,
 				04B70FF51A6EACDA00FC0377 /* HTMLScanner.swift in Sources */,
@@ -286,6 +306,7 @@
 				04445E3D1A5D883F00B3C6A0 /* ja */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		04445E241A5D716500B3C6A0 /* LaunchScreen.xib */ = {
@@ -295,6 +316,7 @@
 				04445E3E1A5D883F00B3C6A0 /* ja */,
 			);
 			name = LaunchScreen.xib;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -340,7 +362,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/include/libxml2,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -385,7 +407,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/include/libxml2,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -400,7 +422,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = WebMangaAntennaReader/Info.plist;
+				INFOPLIST_FILE = "WebMangaAntennaReader/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.takashi8.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -415,7 +437,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = WebMangaAntennaReader/Info.plist;
+				INFOPLIST_FILE = "WebMangaAntennaReader/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.takashi8.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

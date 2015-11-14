@@ -12,11 +12,15 @@ import Social
 
 class SettingViewController: UITableViewController {
     private static let INTERVALS:[Int] = [3, 6, 12, 24]
+    private static let HOUR:Int = 3600
     
+    @IBOutlet weak var syncMethodLabel: UILabel!
     @IBOutlet weak var listUrl: UILabel!
     @IBOutlet weak var interval: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var updateCheckCell: UITableViewCell!
+    @IBOutlet weak var syncMethodCell: UITableViewCell!
+    @IBOutlet weak var listCell: UITableViewCell!
     @IBOutlet weak var reviewCell: UITableViewCell!
     @IBOutlet weak var recommendCell: UITableViewCell!
     
@@ -29,15 +33,34 @@ class SettingViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        let ud = NSUserDefaults.standardUserDefaults()
-        if let myListId:String = ud.stringForKey(Constants.UserDefaultsKeys.MY_LIST_ID) {
-            listUrl.text = Constants.WEB_MANGA_ANTENNA_URL + "list/" + myListId;
-        } else {
-            listUrl.text = "未設定";
-        }
+        setSyncMethodLabel()
         setUpdateCheckLabelText()
     }
-
+    
+    private func setListURLText() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        let listId = ud.stringForKey(Constants.UserDefaultsKeys.LIST_ID)
+        if listId == nil || listId!.isEmpty {
+            listUrl.text = "未設定";
+        } else {
+            listUrl.text = Constants.WEB_MANGA_ANTENNA_URL + "/list/" + listId!;
+        }
+    }
+    
+    private func setSyncMethodLabel() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        let syncMethod:Int = ud.integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
+        if (syncMethod == Constants.SyncMethods.MY_LIST) {
+            syncMethodLabel.text = "マイリスト同期"
+            listCell.hidden = true
+        } else {
+            syncMethodLabel.text = "リストURL指定"
+            listCell.hidden = false
+            setListURLText()
+        }
+        self.tableView.reloadData()
+    }
+    
     private func setUpdateCheckLabelText() {
         let ud = NSUserDefaults.standardUserDefaults()
         let updateInterval:Int = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
@@ -48,6 +71,8 @@ class SettingViewController: UITableViewController {
         let tappedCell = self.tableView.cellForRowAtIndexPath(indexPath)
         if (tappedCell == updateCheckCell) {
             showIntervalSelection()
+        } else if (tappedCell == syncMethodCell) {
+            showSyncMethodSelection()
         } else if (tappedCell == reviewCell) {
             showReview()
         } else if (tappedCell == recommendCell) {
@@ -56,24 +81,70 @@ class SettingViewController: UITableViewController {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    @IBAction func cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+        if (cell.hidden) {
+            return 0;
+        } else {
+            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        }
     }
-
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "unwindComicsFromSetting") {
+            let ud = NSUserDefaults.standardUserDefaults()
+            let interval = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
+            if interval > 0 {
+                UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(interval * SettingViewController.HOUR));
+                NSLog("Set minimum background fetch interval=\(interval) hours")
+            }
+        }
+    }
+    
+    private func showSyncMethodSelection() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let myListRow = UIAlertAction(title: "マイリスト同期", style: .Default) { action in
+            let ud = NSUserDefaults.standardUserDefaults()
+            ud.setObject(Constants.SyncMethods.MY_LIST, forKey: Constants.UserDefaultsKeys.SYNC_METHOD)
+            self.setSyncMethodLabel()
+        }
+        alertController.addAction(myListRow)
+        let listRow = UIAlertAction(title: "リストURL指定", style: .Default) { action in
+            let ud = NSUserDefaults.standardUserDefaults()
+            ud.setObject(Constants.SyncMethods.LIST_URL, forKey: Constants.UserDefaultsKeys.SYNC_METHOD)
+            self.setSyncMethodLabel()
+        }
+        alertController.addAction(listRow)
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        // For iPad
+        if let _ = alertController.popoverPresentationController {
+            alertController.popoverPresentationController?.sourceView = self.view
+            let frame = UIScreen.mainScreen().applicationFrame
+            alertController.popoverPresentationController?.sourceRect = CGRectMake(CGRectGetMidX(frame) - 90, syncMethodCell.frame.origin.x + 70, 120, 50)
+        }
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     private func showIntervalSelection() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         for hour in SettingViewController.INTERVALS {
             let actionRow = UIAlertAction(title: "\(hour)時間毎", style: .Default) { action in
                 let ud = NSUserDefaults.standardUserDefaults()
                 ud.setObject(hour, forKey: Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
+                UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(hour * SettingViewController.HOUR));
+                NSLog("Set minimum background fetch interval=\(hour) hours")
                 self.setUpdateCheckLabelText()
-                NSLog("Set update interval every %d hour", hour)
             }
             alertController.addAction(actionRow)
         }
         let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: nil)
         // For iPad
-        if let popoverController = alertController.popoverPresentationController {
+        if let _ = alertController.popoverPresentationController {
             alertController.popoverPresentationController?.sourceView = self.view
             let frame = UIScreen.mainScreen().applicationFrame
             alertController.popoverPresentationController?.sourceRect = CGRectMake(CGRectGetMidX(frame) - 90, updateCheckCell.frame.origin.x + 70, 120, 50)
@@ -117,7 +188,7 @@ class SettingViewController: UITableViewController {
         alertController.addAction(cancelAction)
         
         // For iPad
-        if let popoverController = alertController.popoverPresentationController {
+        if let _ = alertController.popoverPresentationController {
             alertController.popoverPresentationController?.sourceView = self.view
             alertController.popoverPresentationController?.sourceRect = CGRectMake(100.0, 100.0, 20.0, 20.0);
         }
@@ -129,5 +200,9 @@ class SettingViewController: UITableViewController {
         if let url = NSURL(string:"https://itunes.apple.com/us/app/web-man-huaantenarida/id997210763?l=ja&ls=1&mt=8") {
             UIApplication.sharedApplication().openURL(url)
         }
+    }
+    
+    @IBAction func unwindSetting(seque:UIStoryboardSegue) {
+        // Nothing todo
     }
 }

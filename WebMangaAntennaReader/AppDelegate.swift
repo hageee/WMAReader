@@ -15,59 +15,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        let ud = NSUserDefaults.standardUserDefaults()
+        let listId = ud.stringForKey(Constants.UserDefaultsKeys.LIST_ID)
+        let interval = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
+        let syncMethod = ud.integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
+        NSLog("ApplicationDidFinishLaunchingWithOptions: options=\(launchOptions), listID=\(listId), syncMethod=\(syncMethod), updateInterval=\(interval)")
+        initSyncMethod()
+        initNotificationSettings()
+        CookiePersistanceManager.sharedInstance.loadCookie()
         return true
     }
     
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {        
+    private func initSyncMethod() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        let listId = ud.stringForKey(Constants.UserDefaultsKeys.LIST_ID)
+        let syncMethod = ud.integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
+        if (syncMethod == 0) {
+            if (listId != nil) {
+                ud.setInteger(Constants.SyncMethods.LIST_URL, forKey: Constants.UserDefaultsKeys.SYNC_METHOD)
+            } else {
+                ud.setInteger(Constants.SyncMethods.MY_LIST, forKey: Constants.UserDefaultsKeys.SYNC_METHOD)
+            }
+        }
+    }
+    
+    private func initNotificationSettings() {
+        let application = UIApplication.sharedApplication()
+        let settings = UIUserNotificationSettings(
+            forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Sound, UIUserNotificationType.Alert],
+            categories: nil)
+        application.registerUserNotificationSettings(settings);
+        let ud = NSUserDefaults.standardUserDefaults()
+        var interval = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
+        if interval <= 0 {
+            interval = Constants.BACKGROUND_FETCH_INTERBAL_DEFAULT
+            ud.setInteger(Constants.BACKGROUND_FETCH_INTERBAL_DEFAULT, forKey: Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
+        }
+        application.setMinimumBackgroundFetchInterval(NSTimeInterval(interval * 60 * 60));
+    }
+        
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         let notification = NSNotification(name: Constants.Notifications.UPDATE_COMIC, object: nil)
         NSNotificationCenter.defaultCenter().postNotification(notification)
     }
     
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        let ud = NSUserDefaults.standardUserDefaults()
-        if let myListId:String = ud.stringForKey(Constants.UserDefaultsKeys.MY_LIST_ID) {
-            NSLog("Fetch Start.")
-            RemoteComic.fetch(forList: myListId) { (remoteComics, error, local) -> Void in
-                let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
-                for remoteComic in remoteComics {
-                    comicDao.save(remoteComic)
-                }
-                if let willNotifyComics: [Comic] = comicDao.findWillNotify() {
-                    NSLog("Fetch Finished with NewData")
-                    self.notify(willNotifyComics)
-                    for comic in willNotifyComics {
-                        comic.willNotify = false
-                        comicDao.save(comic)
-                    }
-                    completionHandler(UIBackgroundFetchResult.NewData)
-                } else {
-                    NSLog("Fetch Finished with NoData")
-                    completionHandler(UIBackgroundFetchResult.NoData)
-                }
-            }
-        } else {
-            NSLog("Fetch didn't start because my list id is not registered.")
-            completionHandler(UIBackgroundFetchResult.NoData)
-        }
-    }
-    
-    func notify(comics:[Comic]) {
-        if comics.count == 0 { return }
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        let topComic = comics[0]
-        let notification = UILocalNotification()
-        notification.fireDate = NSDate()	// すぐに通知したいので現在時刻を取得
-        notification.timeZone = NSTimeZone.defaultTimeZone()
-        if comics.count == 1 {
-            notification.alertBody = String(format: "「%@」が更新されました！", arguments: [topComic.title])
-        } else {
-            let numOfComics:String = String(comics.count - 1)
-            notification.alertBody = String(format: "「%@」他、%@本の漫画が更新されました！", arguments: [topComic.title, numOfComics])
-        }
-        notification.alertAction = "OK"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 1;
+        BackgroudFetcher.init(completionHandler: completionHandler).start()
     }
     
     func applicationWillResignActive(application: UIApplication) {
@@ -76,8 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        CookiePersistanceManager.sharedInstance.saveCookie()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -89,8 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
+        CookiePersistanceManager.sharedInstance.saveCookie()
         self.saveContext()
     }
 
@@ -143,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if coordinator == nil {
             return nil
         }
-        var managedObjectContext = NSManagedObjectContext()
+        var managedObjectContext = NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
         }()
