@@ -18,7 +18,7 @@ class BackgroudFetcher {
     }
 
     func start() -> Void {
-        NSLog("BackgroudFetcher Start")
+        NSLog("Start BackgroudFetcher")
         let ud = NSUserDefaults.standardUserDefaults()
         let syncMethod = ud.integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
         if (syncMethod == Constants.SyncMethods.LIST_URL) {
@@ -46,10 +46,10 @@ class BackgroudFetcher {
         }
         if !updatedComics.isEmpty {
             self.notify(updatedComics)
-            NSLog("Fetch Finished with NewData")
+            NSLog("Finish BackgroudFetcher with NewData")
             self.completionHandler(UIBackgroundFetchResult.NewData)
         } else {
-            NSLog("Fetch Finished with NoData")
+            NSLog("Finish BackgroudFetcher with NoData")
             self.completionHandler(UIBackgroundFetchResult.NoData)
         }
     }
@@ -68,7 +68,11 @@ class BackgroudFetcher {
             notification.alertBody = String(format: "「%@」他、%@本の漫画が更新されました！", arguments: [topComic.title, numOfComics])
         }
         notification.alertAction = "OK"
-        notification.soundName = UILocalNotificationDefaultSoundName
+        let hour = NSCalendar.currentCalendar().components([.Hour], fromDate: NSDate()).hour
+        // 深夜〜早朝はサウンドを鳴らさない
+        if !(1 <= hour && hour <= 7) {
+            notification.soundName = UILocalNotificationDefaultSoundName
+        }
         UIApplication.sharedApplication().presentLocalNotificationNow(notification)
         UIApplication.sharedApplication().applicationIconBadgeNumber = 1;
     }
