@@ -22,7 +22,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         self.title = "Web漫画アンテナリーダー"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: Constants.Notifications.UPDATE_COMIC, object: nil)
         self.refreshControl?.addTarget(self, action: "reload", forControlEvents: UIControlEvents.ValueChanged)
-        reload()
+        load()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,6 +41,18 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         return NSUserDefaults.standardUserDefaults().integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
     }
 
+    private func load() {
+        let globalQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        let mainQueue: dispatch_queue_t  = dispatch_get_main_queue();
+        dispatch_async(globalQueue, {
+            self.comics = self.comicDao.findAll()!
+            dispatch_async(mainQueue, {
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+            })
+        })
+    }
+    
     func reload() {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0;
         if (Constants.SyncMethods.LIST_URL == currentSyncMethod()) {
@@ -53,19 +65,17 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     }
     
     private func fetchCompletationCallbak(remoteComics: [RemoteComic]!, error: Fetcher.ResponseError!, local: Bool) -> Void {
+        NSLog("Start fetchCompletationCallbak")
         if remoteComics?.count > 0 {
             let q_global: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            let q_main: dispatch_queue_t  = dispatch_get_main_queue();
             dispatch_async(q_global, {
                 for remoteComic in remoteComics {
                     self.comicDao.save(remoteComic)
                 }
-                self.comics = self.comicDao.findAll()!
-                dispatch_async(q_main, {
-                    self.tableView.reloadData()
-                    self.refreshControl?.endRefreshing()
-                })
+                self.load()
+                NSLog("Finish fetchCompletationCallbak")
             })
+            initNotificationSettings()
         } else {
             dispatch_async(dispatch_get_main_queue(), {
                 if (Constants.SyncMethods.LIST_URL == self.currentSyncMethod()) {
@@ -73,8 +83,16 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
                 } else {
                     self.showAlert("エラー", message: "漫画の更新情報が取得できませんでした。ネットワークに繋がっていないか、マイリストに漫画が登録されていない可能性があります。編集ボタンからマイリストを開いてご確認ください。")
                 }
+                NSLog("Finish fetchCompletationCallbak with error")
             })
         }
+    }
+    
+    private func initNotificationSettings() {
+        let settings = UIUserNotificationSettings(
+            forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Sound, UIUserNotificationType.Alert],
+            categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings);
     }
     
     private func showListAlert(title:String?, message: String?) {
@@ -137,11 +155,6 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.performSegueWithIdentifier(Constants.Seques.SHOW_WEB_SITE, sender: self)
-    }
-    
-    @IBAction func reloadBtnTouched(sender : AnyObject) {
-        self.reload()
-        self.tableView.scrollRectToVisible(CGRect(x:0 , y: 0, width: 1,height:1), animated: true)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

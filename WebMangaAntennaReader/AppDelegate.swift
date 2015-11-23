@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let syncMethod = ud.integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
         NSLog("ApplicationDidFinishLaunchingWithOptions: options=\(launchOptions), listID=\(listId), syncMethod=\(syncMethod), updateInterval=\(interval)")
         initSyncMethod()
-        initNotificationSettings()
+        initBackgroundFetchInterval()
         CookiePersistanceManager.sharedInstance.loadCookie()
         return true
     }
@@ -39,21 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private func initNotificationSettings() {
-        let application = UIApplication.sharedApplication()
-        let settings = UIUserNotificationSettings(
-            forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Sound, UIUserNotificationType.Alert],
-            categories: nil)
-        application.registerUserNotificationSettings(settings);
+    private func initBackgroundFetchInterval() {
         let ud = NSUserDefaults.standardUserDefaults()
         var interval = ud.integerForKey(Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
         if interval <= 0 {
             interval = Constants.BACKGROUND_FETCH_INTERBAL_DEFAULT
             ud.setInteger(Constants.BACKGROUND_FETCH_INTERBAL_DEFAULT, forKey: Constants.UserDefaultsKeys.UPDATE_CHECK_INTERVAL)
         }
-        application.setMinimumBackgroundFetchInterval(NSTimeInterval(interval * 60 * 60));
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(NSTimeInterval(interval * 60 * 60));
     }
-        
+
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         let notification = NSNotification(name: Constants.Notifications.UPDATE_COMIC, object: nil)
         NSNotificationCenter.defaultCenter().postNotification(notification)
@@ -129,13 +124,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }()
     
     lazy var managedObjectContext: NSManagedObjectContext? = {
-        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
         if coordinator == nil {
             return nil
         }
         var managedObjectContext = NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
         }()
     
