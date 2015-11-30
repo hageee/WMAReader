@@ -51,7 +51,7 @@ class SettingViewController: UITableViewController {
         let ud = NSUserDefaults.standardUserDefaults()
         let syncMethod:Int = ud.integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
         if (syncMethod == Constants.SyncMethods.MY_LIST) {
-            syncMethodLabel.text = "マイリスト同期"
+            syncMethodLabel.text = "マイリスト"
             listCell.hidden = true
         } else {
             syncMethodLabel.text = "リストURL指定"
@@ -110,7 +110,7 @@ class SettingViewController: UITableViewController {
     private func showSyncMethodSelection() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
-        let myListRow = UIAlertAction(title: "マイリスト同期", style: .Default) { action in
+        let myListRow = UIAlertAction(title: "マイリスト", style: .Default) { action in
             let ud = NSUserDefaults.standardUserDefaults()
             ud.setObject(Constants.SyncMethods.MY_LIST, forKey: Constants.UserDefaultsKeys.SYNC_METHOD)
             self.setSyncMethodLabel()

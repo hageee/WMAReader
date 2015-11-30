@@ -63,7 +63,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         if popupView == nil {
             initPopupView()
         }
-        popupView?.message = "編集ボタンを押してWeb漫画アンテナリーダーのマイリストを作成しましょう。\nアプリで更新をチェックできるようになります。"
+        popupView?.message = "編集ボタンを押してWeb漫画アンテナのマイリストを作成しましょう。\nアプリで更新をチェックできるようになります。"
         popupView?.presentPointingAtBarButtonItem(editButton, animated:true);
     }
     
