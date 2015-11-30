@@ -26,7 +26,7 @@ class ListSettingViewController: UIViewController {
     }
 
     @IBAction func openWebMangaAntennaList(sender: AnyObject) {
-        if let url = NSURL(string: Constants.WEB_MANGA_ANTENNA_URL + "/list" + myListIdTextField.text!) {
+        if let url = NSURL(string: Constants.WEB_MANGA_ANTENNA_URL + "/list/" + myListIdTextField.text!) {
             UIApplication.sharedApplication().openURL(url)
         }
     }

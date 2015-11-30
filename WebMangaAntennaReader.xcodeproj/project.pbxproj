@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0401F1B71C02E4860054EBB1 /* BackgroudFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0401F1B61C02E4860054EBB1 /* BackgroudFetcher.swift */; };
+		041EA9EE1C0B2AA60086BCDB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 041EA9ED1C0B2AA60086BCDB /* Settings.bundle */; };
+		042A654B1C0B071C0094D341 /* goBack@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042A65491C0B071C0094D341 /* goBack@3x.png */; };
+		042A654C1C0B071C0094D341 /* goForward@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042A654A1C0B071C0094D341 /* goForward@3x.png */; };
 		043A4CF41AD92C4600FF1009 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A4CF31AD92C4600FF1009 /* WebViewController.swift */; };
 		04445E191A5D716500B3C6A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E181A5D716500B3C6A0 /* AppDelegate.swift */; };
 		04445E1C1A5D716500B3C6A0 /* WebMangaAntennaReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04445E1A1A5D716500B3C6A0 /* WebMangaAntennaReader.xcdatamodeld */; };
@@ -16,7 +19,6 @@
 		04445E231A5D716500B3C6A0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04445E221A5D716500B3C6A0 /* Images.xcassets */; };
 		04445E261A5D716500B3C6A0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04445E241A5D716500B3C6A0 /* LaunchScreen.xib */; };
 		04445E3C1A5D765900B3C6A0 /* ComicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E3B1A5D765900B3C6A0 /* ComicCell.swift */; };
-		0447791D1BF7291F00F65A32 /* WebEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447791C1BF7291F00F65A32 /* WebEditController.swift */; };
 		044D55081ADF988D008312E9 /* ListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D55071ADF988D008312E9 /* ListSettingViewController.swift */; };
 		044D550C1ADFAE37008312E9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044D550B1ADFAE37008312E9 /* Constants.swift */; };
 		049FAA901B04985100651FC3 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049FAA8F1B04985100651FC3 /* SettingViewController.swift */; };
@@ -31,10 +33,14 @@
 		04F65F0A1AD3E25900E42BE0 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F65F091AD3E25900E42BE0 /* Comic.swift */; };
 		04F65F0C1AD3E29A00E42BE0 /* ComicDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F65F0B1AD3E29A00E42BE0 /* ComicDao.swift */; };
 		04F70ECC1C031E580070726C /* CookiePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F70ECB1C031E580070726C /* CookiePersistenceManager.swift */; };
+		A33E3475C989B56269C660B8 /* Pods_WebMangaAntennaReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F454BE829C02E524C673983 /* Pods_WebMangaAntennaReader.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0401F1B61C02E4860054EBB1 /* BackgroudFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroudFetcher.swift; sourceTree = "<group>"; };
+		041EA9ED1C0B2AA60086BCDB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		042A65491C0B071C0094D341 /* goBack@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goBack@3x.png"; sourceTree = "<group>"; };
+		042A654A1C0B071C0094D341 /* goForward@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goForward@3x.png"; sourceTree = "<group>"; };
 		043A4CF31AD92C4600FF1009 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		04445E131A5D716500B3C6A0 /* WebMangaAntennaReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebMangaAntennaReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04445E171A5D716500B3C6A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,7 +53,6 @@
 		04445E3B1A5D765900B3C6A0 /* ComicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicCell.swift; sourceTree = "<group>"; };
 		04445E3D1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04445E3E1A5D883F00B3C6A0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		0447791C1BF7291F00F65A32 /* WebEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebEditController.swift; sourceTree = "<group>"; };
 		044D55071ADF988D008312E9 /* ListSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSettingViewController.swift; sourceTree = "<group>"; };
 		044D550B1ADFAE37008312E9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		049FAA8F1B04985100651FC3 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +67,9 @@
 		04F65F091AD3E25900E42BE0 /* Comic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
 		04F65F0B1AD3E29A00E42BE0 /* ComicDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicDao.swift; sourceTree = "<group>"; };
 		04F70ECB1C031E580070726C /* CookiePersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookiePersistenceManager.swift; sourceTree = "<group>"; };
+		0F454BE829C02E524C673983 /* Pods_WebMangaAntennaReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebMangaAntennaReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B15F75B72FC3613C2D6EB09 /* Pods-WebMangaAntennaReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebMangaAntennaReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebMangaAntennaReader/Pods-WebMangaAntennaReader.debug.xcconfig"; sourceTree = "<group>"; };
+		8E1B0FCC7507B6CC4AD26E69 /* Pods-WebMangaAntennaReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebMangaAntennaReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebMangaAntennaReader/Pods-WebMangaAntennaReader.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				049FAA941B05959500651FC3 /* Social.framework in Frameworks */,
+				A33E3475C989B56269C660B8 /* Pods_WebMangaAntennaReader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +92,7 @@
 				04445E141A5D716500B3C6A0 /* Products */,
 				04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */,
 				049FAA931B05959500651FC3 /* Social.framework */,
+				798D48CA3375EC3CA9391BA5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +121,7 @@
 				04445E241A5D716500B3C6A0 /* LaunchScreen.xib */,
 				04445E1F1A5D716500B3C6A0 /* Main.storyboard */,
 				04445E1A1A5D716500B3C6A0 /* WebMangaAntennaReader.xcdatamodeld */,
+				041EA9ED1C0B2AA60086BCDB /* Settings.bundle */,
 			);
 			path = WebMangaAntennaReader;
 			sourceTree = "<group>";
@@ -130,7 +141,6 @@
 				04445E1D1A5D716500B3C6A0 /* ComicsViewController.swift */,
 				044D55071ADF988D008312E9 /* ListSettingViewController.swift */,
 				049FAA8F1B04985100651FC3 /* SettingViewController.swift */,
-				0447791C1BF7291F00F65A32 /* WebEditController.swift */,
 				043A4CF31AD92C4600FF1009 /* WebViewController.swift */,
 			);
 			path = Controllers;
@@ -147,6 +157,8 @@
 		049FAA991B05DDD300651FC3 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				042A65491C0B071C0094D341 /* goBack@3x.png */,
+				042A654A1C0B071C0094D341 /* goForward@3x.png */,
 				049FAA9A1B05DF6200651FC3 /* splash.png */,
 				049FAA971B05DDB000651FC3 /* splash@2x.png */,
 				049FAA9B1B05DF6200651FC3 /* splash@3x.png */,
@@ -157,9 +169,9 @@
 		04B70FE51A6E969E00FC0377 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
+				04F70ECB1C031E580070726C /* CookiePersistenceManager.swift */,
 				04B70FE61A6E96D000FC0377 /* Fetcher.swift */,
 				04B70FE91A6E994500FC0377 /* RemoteComic.swift */,
-				04F70ECB1C031E580070726C /* CookiePersistenceManager.swift */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -189,9 +201,19 @@
 			path = test;
 			sourceTree = "<group>";
 		};
+		798D48CA3375EC3CA9391BA5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3B15F75B72FC3613C2D6EB09 /* Pods-WebMangaAntennaReader.debug.xcconfig */,
+				8E1B0FCC7507B6CC4AD26E69 /* Pods-WebMangaAntennaReader.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		8F2BED88D7DDE3ECBD927946 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F454BE829C02E524C673983 /* Pods_WebMangaAntennaReader.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,9 +225,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04445E351A5D716600B3C6A0 /* Build configuration list for PBXNativeTarget "WebMangaAntennaReader" */;
 			buildPhases = (
+				134AFD93BFDA21D139F813B3 /* Check Pods Manifest.lock */,
 				04445E0F1A5D716500B3C6A0 /* Sources */,
 				04445E101A5D716500B3C6A0 /* Frameworks */,
 				04445E111A5D716500B3C6A0 /* Resources */,
+				2BFEE6440BACDA6EAD85F88C /* Embed Pods Frameworks */,
+				E4E58839CF004BF8ED7C2025 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -261,15 +286,66 @@
 			buildActionMask = 2147483647;
 			files = (
 				04445E211A5D716500B3C6A0 /* Main.storyboard in Resources */,
+				042A654C1C0B071C0094D341 /* goForward@3x.png in Resources */,
 				049FAA981B05DDB000651FC3 /* splash@2x.png in Resources */,
+				042A654B1C0B071C0094D341 /* goBack@3x.png in Resources */,
 				04445E261A5D716500B3C6A0 /* LaunchScreen.xib in Resources */,
 				04445E231A5D716500B3C6A0 /* Images.xcassets in Resources */,
 				049FAA9D1B05DF6200651FC3 /* splash@3x.png in Resources */,
+				041EA9EE1C0B2AA60086BCDB /* Settings.bundle in Resources */,
 				049FAA9C1B05DF6200651FC3 /* splash.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		134AFD93BFDA21D139F813B3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2BFEE6440BACDA6EAD85F88C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebMangaAntennaReader/Pods-WebMangaAntennaReader-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4E58839CF004BF8ED7C2025 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WebMangaAntennaReader/Pods-WebMangaAntennaReader-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		04445E0F1A5D716500B3C6A0 /* Sources */ = {
@@ -278,7 +354,6 @@
 			files = (
 				04445E1E1A5D716500B3C6A0 /* ComicsViewController.swift in Sources */,
 				043A4CF41AD92C4600FF1009 /* WebViewController.swift in Sources */,
-				0447791D1BF7291F00F65A32 /* WebEditController.swift in Sources */,
 				049FAA901B04985100651FC3 /* SettingViewController.swift in Sources */,
 				04F70ECC1C031E580070726C /* CookiePersistenceManager.swift in Sources */,
 				0401F1B71C02E4860054EBB1 /* BackgroudFetcher.swift in Sources */,
@@ -418,11 +493,13 @@
 		};
 		04445E361A5D716600B3C6A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B15F75B72FC3613C2D6EB09 /* Pods-WebMangaAntennaReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "WebMangaAntennaReader/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.takashi8.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -433,11 +510,13 @@
 		};
 		04445E371A5D716600B3C6A0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8E1B0FCC7507B6CC4AD26E69 /* Pods-WebMangaAntennaReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "WebMangaAntennaReader/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.takashi8.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

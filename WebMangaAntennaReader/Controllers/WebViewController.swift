@@ -2,61 +2,50 @@
 //  WebViewController.swift
 //  WebMangaAntennaReader
 //
-//  Created by Takashi Hagura on 2015/04/11.
-//  Copyright (c) 2015年 Takashi Hagura. All rights reserved.
+//  Created by Takashi Hagura on 2015/11/14.
+//  Copyright © 2015年 Takashi Hagura. All rights reserved.
 //
 
 import UIKit
+import Accounts
 
 class WebViewController: UIViewController, UIWebViewDelegate {
-
+    
     @IBOutlet weak var webView: UIWebView!
-    @IBOutlet weak var actionButton: UIBarButtonItem!
+    @IBOutlet weak var goBackButton: UIBarButtonItem!
+    @IBOutlet weak var goForwardButton: UIBarButtonItem!
+    @IBOutlet weak var openButton: UIBarButtonItem!
     
-    private var _comic:Comic? = nil
-    private var _url:String? = nil
     private var indicator:UIActivityIndicatorView? = nil
+    private var _url:String? = nil
+    private var _title:String? = nil
     
-    var comic: Comic? {
+    var url: String? {
         get {
-            return _comic
+            return _url
         }
         set(newValue) {
-            _comic = newValue
+            _url = newValue
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = comic?.title
-        showIndicator()
         loadURL()
+        goBackButton.enabled = false;
+        goForwardButton.enabled = false;
+        addIndicator()
     }
     
-    private func showIndicator() {
-        indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        indicator?.frame = CGRectMake(0, 0, 48, 48)
-        indicator?.center = self.view.center;
-        indicator?.hidesWhenStopped = true;
-        indicator?.startAnimating()
-        self.view.addSubview(indicator!)
+    @IBAction func goBack(sender: AnyObject) {
+        webView.goBack()
     }
     
-    // UIWebViewDelegate
-    func webViewDidFinishLoad(webView: UIWebView) {
-        indicator?.stopAnimating()
+    @IBAction func goForward(sender: AnyObject) {
+        webView.goForward()
     }
     
-    private func loadURL() {
-        if let urlStr:String = _comic?.url == nil ? _url : _comic?.url  {
-            if let url = NSURL(string: urlStr) {
-                let req = NSURLRequest(URL: url)
-                webView.loadRequest(req)
-            }
-        }
-    }
-    
-    @IBAction func selectAction(sender: AnyObject) {
+    @IBAction func openURL(sender: AnyObject) {
         let alert = UIAlertController(
             title: nil,
             message: nil,
@@ -66,9 +55,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             style: UIAlertActionStyle.Default,
             handler:{
                 (action:UIAlertAction) -> Void in
-                if let urlStr:String = self._comic?.url {
+                if let urlStr = self.webView.stringByEvaluatingJavaScriptFromString("document.URL") {
                     if let url = NSURL(string: urlStr) {
-                    UIApplication.sharedApplication().openURL(url)
+                        UIApplication.sharedApplication().openURL(url)
                     }
                 }
         })
@@ -80,6 +69,53 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         })
         alert.addAction(openSafari)
         alert.addAction(cancel)
+        alert.popoverPresentationController?.barButtonItem = openButton
         presentViewController(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func refresh(sender: AnyObject) {
+        webView.reload()
+    }
+    
+    private func addIndicator() {
+        indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        indicator?.frame = CGRectMake(0, 0, 48, 48)
+        indicator?.center = self.view.center;
+        indicator?.hidesWhenStopped = true;
+        self.view.addSubview(indicator!)
+    }
+    
+    private func getWebPageTitle() -> String {
+        if let webPageTitle = webView.stringByEvaluatingJavaScriptFromString("document.title") {
+            return webPageTitle
+        }
+        return ""
+    }
+    
+    private func loadURL() {
+        if let urlStr:String = _url {
+            if let url = NSURL(string: urlStr) {
+                let req = NSURLRequest(URL: url)
+                webView.loadRequest(req)
+            }
+        }
+    }
+    
+    // UIWebViewDelegate
+    
+    func webViewDidStartLoad(webView: UIWebView) {
+        indicator?.startAnimating()
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        if let _ = indicator?.isAnimating() {
+            indicator?.stopAnimating()
+        }
+        if (self.title == nil) {
+            self.title = getWebPageTitle()
+        }
+        goBackButton.enabled = webView.canGoBack;
+        goForwardButton.enabled = webView.canGoForward;
+    }
+    
 }

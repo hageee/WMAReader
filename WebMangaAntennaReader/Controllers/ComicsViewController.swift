@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CMPopTipView
 
 class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     
@@ -14,12 +15,11 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     
     private var comics: [Comic] = []
     private var imageCache:Dictionary<String, UIImage>  = Dictionary()
-    
+    private var popupView:CMPopTipView? = nil
     let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Web漫画アンテナリーダー"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: Constants.Notifications.UPDATE_COMIC, object: nil)
         self.refreshControl?.addTarget(self, action: "reload", forControlEvents: UIControlEvents.ValueChanged)
         load()
@@ -33,14 +33,44 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         self.editButton.enabled = (currentSyncMethod() == Constants.SyncMethods.MY_LIST)
     }
     
-    private func currentMyListId() -> String? {
-        return NSUserDefaults.standardUserDefaults().stringForKey(Constants.UserDefaultsKeys.LIST_ID)
+    override func viewWillDisappear(animated: Bool) {
+        hideSuggestion()
+        super.viewWillAppear(animated)
+    }
+    
+    private func currentMyListId() -> String {
+        if let listId = NSUserDefaults.standardUserDefaults().stringForKey(Constants.UserDefaultsKeys.LIST_ID) {
+            return listId
+        }
+        return ""
     }
     
     private func currentSyncMethod() -> Int? {
         return NSUserDefaults.standardUserDefaults().integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
     }
-
+    
+    private func initPopupView() {
+        popupView = CMPopTipView()
+        // popup.delegate = self;
+        popupView?.textAlignment = NSTextAlignment.Left
+        popupView?.backgroundColor = UIColor(red: 0, green: 183 / 255, blue: 238 / 255, alpha: 0.9);
+        popupView?.borderWidth = 0;
+        popupView?.has3DStyle = false
+        popupView?.hasGradientBackground = false
+    }
+    
+    private func showSuggestion() {
+        if popupView == nil {
+            initPopupView()
+        }
+        popupView?.message = "編集ボタンを押してWeb漫画アンテナリーダーのマイリストを作成しましょう。\nアプリで更新をチェックできるようになります。"
+        popupView?.presentPointingAtBarButtonItem(editButton, animated:true);
+    }
+    
+    private func hideSuggestion() {
+        popupView?.dismissAnimated(true)
+    }
+    
     private func load() {
         let globalQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         let mainQueue: dispatch_queue_t  = dispatch_get_main_queue();
@@ -49,6 +79,9 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
             dispatch_async(mainQueue, {
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
+                if (self.currentSyncMethod() == Constants.SyncMethods.MY_LIST && self.comics.count == 0) {
+                    self.showSuggestion()
+                }
             })
         })
     }
@@ -56,9 +89,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     func reload() {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0;
         if (Constants.SyncMethods.LIST_URL == currentSyncMethod()) {
-            if let listId:String = currentMyListId() {
-                RemoteComic.fetch(forList: listId, completion: fetchCompletationCallbak)
-            }
+            RemoteComic.fetch(forList: currentMyListId(), completion: fetchCompletationCallbak)
         } else {
             RemoteComic.fetchBookmark(fetchCompletationCallbak)
         }
@@ -83,6 +114,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
                 } else {
                     self.showAlert("エラー", message: "漫画の更新情報が取得できませんでした。ネットワークに繋がっていないか、マイリストに漫画が登録されていない可能性があります。編集ボタンからマイリストを開いてご確認ください。")
                 }
+                self.load()
                 NSLog("Finish fetchCompletationCallbak with error")
             })
         }
@@ -122,6 +154,15 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         return c
     }
     
+    private func getImageFromHref(href:String) -> UIImage? {
+        if let imageURL = NSURL(string: href) {
+            if let imageData = NSData(contentsOfURL: imageURL) {
+                return UIImage(data: imageData)
+            }
+        }
+        return nil
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ComicCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! ComicCell
         let comic: Comic = self.comics[indexPath.row] as Comic
@@ -139,15 +180,17 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
             if let href = imageUrl {
                 var image = self.imageCache[href]
                 if image == nil {
-                    let imageURL: NSURL = NSURL(string: href)!
-                    let imageData: NSData = NSData(contentsOfURL: imageURL)!
-                    image = UIImage(data: imageData)!
-                    self.imageCache[href] = image
+                    if let _image = self.getImageFromHref(href) {
+                        image = _image
+                        self.imageCache[href] = image
+                    }
                 }
-                dispatch_async(q_main, {
-                    cell.comicImageView.image = image;
-                    cell.layoutSubviews()
-                })
+                if image != nil {
+                    dispatch_async(q_main, {
+                        cell.comicImageView.image = image;
+                        cell.layoutSubviews()
+                    })
+                }
             }
         })
         return cell;
@@ -161,20 +204,22 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         if (segue.identifier == Constants.Seques.SHOW_WEB_SITE) {
             if let row:NSIndexPath = self.tableView.indexPathForSelectedRow {
                 let comic: Comic = self.comics[row.row] as Comic
-                let webView:WebViewController = segue.destinationViewController as! WebViewController
-                webView.comic = comic
+                let webViewController = segue.destinationViewController as! WebViewController
+                webViewController.url = comic.url
+                webViewController.title = comic.title
             }
         } else if (segue.identifier == Constants.Seques.SHOW_WEB_EDIT) {
-            let webView:WebEditController = segue.destinationViewController as! WebEditController
-            webView.url = Constants.WEB_MANGA_ANTENNA_URL + "/bookmark"
+            let nav = segue.destinationViewController as! UINavigationController
+            let webViewController = nav.topViewController as! WebViewController
+            webViewController.url = Constants.WEB_MANGA_ANTENNA_URL + "/bookmark"
         }
     }
     
-    @IBAction func unwindWithReload(seque:UIStoryboardSegue) {
+    @IBAction func unwindComicsWithReload(seque:UIStoryboardSegue) {
         reload()
     }
     
-    @IBAction func unwindWithReset(seque:UIStoryboardSegue) {
+    @IBAction func unwindComicsWithReset(seque:UIStoryboardSegue) {
         comicDao.deleteAll()
         reload()
     }

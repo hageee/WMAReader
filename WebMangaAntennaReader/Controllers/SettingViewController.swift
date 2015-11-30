@@ -101,6 +101,12 @@ class SettingViewController: UITableViewController {
         }
     }
     
+    private func showAlertController(alertController: UIAlertController) {
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.width / 2.0, self.view.bounds.height / 2.0, 1.0, 1.0)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     private func showSyncMethodSelection() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
@@ -119,15 +125,7 @@ class SettingViewController: UITableViewController {
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
-        
-        // For iPad
-        if let _ = alertController.popoverPresentationController {
-            alertController.popoverPresentationController?.sourceView = self.view
-            let frame = UIScreen.mainScreen().applicationFrame
-            alertController.popoverPresentationController?.sourceRect = CGRectMake(CGRectGetMidX(frame) - 90, syncMethodCell.frame.origin.x + 70, 120, 50)
-        }
-        
-        presentViewController(alertController, animated: true, completion: nil)
+        showAlertController(alertController)
     }
     
     private func showIntervalSelection() {
@@ -143,32 +141,21 @@ class SettingViewController: UITableViewController {
             alertController.addAction(actionRow)
         }
         let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: nil)
-        // For iPad
-        if let _ = alertController.popoverPresentationController {
-            alertController.popoverPresentationController?.sourceView = self.view
-            let frame = UIScreen.mainScreen().applicationFrame
-            alertController.popoverPresentationController?.sourceRect = CGRectMake(CGRectGetMidX(frame) - 90, updateCheckCell.frame.origin.x + 70, 120, 50)
-        }
         alertController.addAction(cancelAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        showAlertController(alertController)
     }
     
     private func showSocialComposeView(type:String) {
-        // availability check
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) {
-            // make controller to share on twitter
             let controller = SLComposeViewController(forServiceType: type)
             
-            // add link to the controller
             let link: String = "http://www.apple.com"
             let url = NSURL(string: link)
             controller.addURL(url)
             
-            // add text to the controller
             let title: String = "Web漫画の更新をほぼリアルタイムでチェックできる。Web漫画アンテナリーダー"
             controller.setInitialText(title)
             
-            // show twitter post screen
             presentViewController(controller, animated: true, completion: {})
         }
     }
@@ -186,14 +173,7 @@ class SettingViewController: UITableViewController {
         alertController.addAction(facebookAction)
         let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
-        
-        // For iPad
-        if let _ = alertController.popoverPresentationController {
-            alertController.popoverPresentationController?.sourceView = self.view
-            alertController.popoverPresentationController?.sourceRect = CGRectMake(100.0, 100.0, 20.0, 20.0);
-        }
-
-        presentViewController(alertController, animated: true, completion: nil)
+        showAlertController(alertController)
     }
     
     private func showReview() {
