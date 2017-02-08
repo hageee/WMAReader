@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--WMAリーダー-->
+        <!--マイリスト-->
         <scene sceneID="ecF-NY-kMD">
             <objects>
                 <tableViewController id="lNx-kJ-HcU" customClass="ComicsViewController" customModule="WebMangaAntennaReader" customModuleProvider="target" sceneMemberID="viewController">
@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="22" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VMI-sg-nyn" id="f7i-Tm-4ly">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fkN-hO-waw">
@@ -116,7 +116,7 @@
                             <outlet property="delegate" destination="lNx-kJ-HcU" id="HAK-yh-IOP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="WMAリーダー" id="m2A-iv-hFb">
+                    <navigationItem key="navigationItem" title="マイリスト" id="m2A-iv-hFb">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="sta-Bf-8IV">
                             <connections>
                                 <segue destination="6w4-w7-Ky3" kind="showDetail" identifier="showWebEdit" id="nC8-xX-VkU"/>
@@ -202,8 +202,8 @@
                                             </mask>
                                         </variation>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yF2-RK-zUs">
-                                        <rect key="frame" x="282" y="10" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yF2-RK-zUs">
+                                        <rect key="frame" x="281" y="10" width="31" height="30"/>
                                         <state key="normal" title="開く"/>
                                         <connections>
                                             <action selector="openWebMangaAntennaList:" destination="l3F-8E-jKr" eventType="touchUpInside" id="GjD-7R-5os"/>
@@ -384,16 +384,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更新チェック" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lye-3v-Lwm">
-                                                    <rect key="frame" x="8" y="11" width="102" height="21"/>
+                                                    <rect key="frame" x="8" y="11" width="150" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="102" id="U6b-Td-hkq"/>
+                                                        <constraint firstAttribute="width" constant="150" id="U6b-Td-hkq"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="interval" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxU-gu-LBB">
-                                                    <rect key="frame" x="125" y="11" width="187" height="21"/>
+                                                    <rect key="frame" x="173" y="11" width="139" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -413,7 +413,7 @@
                             <tableViewSection headerTitle="その他" id="EMM-jg-T4N">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="mMW-Fu-S1B">
-                                        <rect key="frame" x="0.0" y="236" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="237" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="mMW-Fu-S1B" id="6YM-Nk-sDR">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -437,7 +437,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="q45-Tu-JtC">
-                                        <rect key="frame" x="0.0" y="280" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="281" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="q45-Tu-JtC" id="O6X-pb-eXz">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -458,7 +458,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="iFr-hG-1yc">
-                                        <rect key="frame" x="0.0" y="324" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="325" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="iFr-hG-1yc" id="JA1-3i-bMb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -547,8 +547,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hb1-b1-dSe">
-                                <rect key="frame" x="16" y="79" width="288" height="142"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hb1-b1-dSe">
+                                <rect key="frame" x="16" y="79" width="288" height="150.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="　">
                                         <attributes>
@@ -725,7 +725,7 @@ Cgo
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="mCD-tf-Wpg"/>
-                                    <barButtonItem systemItem="action" id="ijF-Ab-VYc">
+                                    <barButtonItem image="ic-safari" id="ijF-Ab-VYc">
                                         <connections>
                                             <action selector="openURL:" destination="6fK-gh-Lq9" id="S0x-Z9-R5C"/>
                                         </connections>
@@ -945,8 +945,9 @@ Cgo
     <resources>
         <image name="goBack.png" width="22" height="22"/>
         <image name="goForward.png" width="22" height="22"/>
+        <image name="ic-safari" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UwS-7z-B6P"/>
+        <segue reference="cLj-Fe-dER"/>
     </inferredMetricsTieBreakers>
 </document>

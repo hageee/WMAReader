@@ -50,9 +50,8 @@ class BackgroudFetcher {
         let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.shared.delegate as! AppDelegate)
         var updatedComics:[Comic] = []
         for remoteComic in remoteComics ?? [] {
-            let oldUpdatedAt = comicDao.findByUrl(remoteComic.url!)?.updatedAt
-            if let comic = comicDao.save(remoteComic) {
-                if oldUpdatedAt != nil && oldUpdatedAt?.hasSuffix("時間前") == false  && oldUpdatedAt < comic.updatedAt {
+            if let comic = comicDao.save(remoteComic), let oldUpdatedAt = comicDao.findByUrl(remoteComic.url!)?.updatedAt {
+                if !oldUpdatedAt.hasSuffix("時間前")  && oldUpdatedAt < comic.updatedAt {
                     updatedComics.append(comic)
                 }
             }
