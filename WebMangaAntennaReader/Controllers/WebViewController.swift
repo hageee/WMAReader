@@ -31,6 +31,8 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // ページめくり中に誤ってバックするとストレスなんで、スワイプによるバックは無効にしておく
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         loadURL()
         goBackButton.isEnabled = false;
         goForwardButton.isEnabled = false;
@@ -46,31 +48,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
     
     @IBAction func openURL(_ sender: AnyObject) {
-        let alert = UIAlertController(
-            title: nil,
-            message: nil,
-            preferredStyle: UIAlertControllerStyle.actionSheet)
-        
-        let openSafari:UIAlertAction = UIAlertAction(title: "Sarafiで開く",
-            style: UIAlertActionStyle.default,
-            handler:{
-                (action:UIAlertAction) -> Void in
-                if let urlStr = self.webView.stringByEvaluatingJavaScript(from: "document.URL") {
-                    if let url = URL(string: urlStr) {
-                        UIApplication.shared.openURL(url)
-                    }
-                }
-        })
-        
-        let cancel:UIAlertAction = UIAlertAction(title: "キャンセル",
-            style: UIAlertActionStyle.cancel,
-            handler:{
-                (action:UIAlertAction) -> Void in
-        })
-        alert.addAction(openSafari)
-        alert.addAction(cancel)
-        alert.popoverPresentationController?.barButtonItem = openButton
-        present(alert, animated: true, completion: nil)
+        if let urlStr = _url {
+            if let url = URL(string: urlStr) {
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
     
     @IBAction func refresh(_ sender: AnyObject) {
