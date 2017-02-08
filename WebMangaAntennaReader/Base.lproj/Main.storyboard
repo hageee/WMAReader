@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="22" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VMI-sg-nyn" id="f7i-Tm-4ly">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fkN-hO-waw">
@@ -413,7 +413,7 @@
                             <tableViewSection headerTitle="その他" id="EMM-jg-T4N">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="mMW-Fu-S1B">
-                                        <rect key="frame" x="0.0" y="237" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="236" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="mMW-Fu-S1B" id="6YM-Nk-sDR">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -437,7 +437,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="q45-Tu-JtC">
-                                        <rect key="frame" x="0.0" y="281" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="280" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="q45-Tu-JtC" id="O6X-pb-eXz">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -458,7 +458,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="iFr-hG-1yc">
-                                        <rect key="frame" x="0.0" y="325" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="324" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="iFr-hG-1yc" id="JA1-3i-bMb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -713,13 +713,13 @@ Cgo
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzY-IR-97L">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem image="goBack.png" id="bdC-lP-WC4">
+                                    <barButtonItem image="goBack" id="bdC-lP-WC4">
                                         <connections>
                                             <action selector="goBack:" destination="6fK-gh-Lq9" id="324-yQ-crp"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="26k-k5-b8V"/>
-                                    <barButtonItem image="goForward.png" id="gPn-WH-Lmq">
+                                    <barButtonItem image="goForward" id="gPn-WH-Lmq">
                                         <connections>
                                             <action selector="goForward:" destination="6fK-gh-Lq9" id="oca-Sl-mbk"/>
                                         </connections>
@@ -843,19 +843,19 @@ Cgo
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ll-kk-LGc">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem image="goBack.png" id="9KO-5i-VGq">
+                                    <barButtonItem image="goBack" id="9KO-5i-VGq">
                                         <connections>
                                             <action selector="goBack:" destination="4hr-uk-fcD" id="fIX-tU-dcN"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="OJP-Ze-ODO"/>
-                                    <barButtonItem image="goForward.png" id="aPI-Kb-mgp">
+                                    <barButtonItem image="goForward" id="aPI-Kb-mgp">
                                         <connections>
                                             <action selector="goForward:" destination="4hr-uk-fcD" id="mUW-gK-cFi"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="DKA-ir-6V9"/>
-                                    <barButtonItem systemItem="action" id="BeI-jS-oH2">
+                                    <barButtonItem image="ic-safari" id="BeI-jS-oH2">
                                         <connections>
                                             <action selector="openURL:" destination="4hr-uk-fcD" id="Yft-fA-cO8"/>
                                         </connections>
@@ -943,8 +943,8 @@ Cgo
         </scene>
     </scenes>
     <resources>
-        <image name="goBack.png" width="22" height="22"/>
-        <image name="goForward.png" width="22" height="22"/>
+        <image name="goBack" width="22" height="22"/>
+        <image name="goForward" width="22" height="22"/>
         <image name="ic-safari" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
