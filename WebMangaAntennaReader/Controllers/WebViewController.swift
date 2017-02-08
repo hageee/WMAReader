@@ -16,9 +16,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var goForwardButton: UIBarButtonItem!
     @IBOutlet weak var openButton: UIBarButtonItem!
     
-    private var indicator:UIActivityIndicatorView? = nil
-    private var _url:String? = nil
-    private var _title:String? = nil
+    fileprivate var indicator:UIActivityIndicatorView? = nil
+    fileprivate var _url:String? = nil
+    fileprivate var _title:String? = nil
     
     var url: String? {
         get {
@@ -32,70 +32,70 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadURL()
-        goBackButton.enabled = false;
-        goForwardButton.enabled = false;
+        goBackButton.isEnabled = false;
+        goForwardButton.isEnabled = false;
         addIndicator()
     }
     
-    @IBAction func goBack(sender: AnyObject) {
+    @IBAction func goBack(_ sender: AnyObject) {
         webView.goBack()
     }
     
-    @IBAction func goForward(sender: AnyObject) {
+    @IBAction func goForward(_ sender: AnyObject) {
         webView.goForward()
     }
     
-    @IBAction func openURL(sender: AnyObject) {
+    @IBAction func openURL(_ sender: AnyObject) {
         let alert = UIAlertController(
             title: nil,
             message: nil,
-            preferredStyle: UIAlertControllerStyle.ActionSheet)
+            preferredStyle: UIAlertControllerStyle.actionSheet)
         
         let openSafari:UIAlertAction = UIAlertAction(title: "Sarafiで開く",
-            style: UIAlertActionStyle.Default,
+            style: UIAlertActionStyle.default,
             handler:{
                 (action:UIAlertAction) -> Void in
-                if let urlStr = self.webView.stringByEvaluatingJavaScriptFromString("document.URL") {
-                    if let url = NSURL(string: urlStr) {
-                        UIApplication.sharedApplication().openURL(url)
+                if let urlStr = self.webView.stringByEvaluatingJavaScript(from: "document.URL") {
+                    if let url = URL(string: urlStr) {
+                        UIApplication.shared.openURL(url)
                     }
                 }
         })
         
         let cancel:UIAlertAction = UIAlertAction(title: "キャンセル",
-            style: UIAlertActionStyle.Cancel,
+            style: UIAlertActionStyle.cancel,
             handler:{
                 (action:UIAlertAction) -> Void in
         })
         alert.addAction(openSafari)
         alert.addAction(cancel)
         alert.popoverPresentationController?.barButtonItem = openButton
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func refresh(sender: AnyObject) {
+    @IBAction func refresh(_ sender: AnyObject) {
         webView.reload()
     }
     
-    private func addIndicator() {
-        indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        indicator?.frame = CGRectMake(0, 0, 48, 48)
+    fileprivate func addIndicator() {
+        indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        indicator?.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
         indicator?.center = self.view.center;
         indicator?.hidesWhenStopped = true;
         self.view.addSubview(indicator!)
     }
     
-    private func getWebPageTitle() -> String {
-        if let webPageTitle = webView.stringByEvaluatingJavaScriptFromString("document.title") {
+    fileprivate func getWebPageTitle() -> String {
+        if let webPageTitle = webView.stringByEvaluatingJavaScript(from: "document.title") {
             return webPageTitle
         }
         return ""
     }
     
-    private func loadURL() {
+    fileprivate func loadURL() {
         if let urlStr:String = _url {
-            if let url = NSURL(string: urlStr) {
-                let req = NSURLRequest(URL: url)
+            if let url = URL(string: urlStr) {
+                let req = URLRequest(url: url)
                 webView.loadRequest(req)
             }
         }
@@ -103,19 +103,19 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     // UIWebViewDelegate
     
-    func webViewDidStartLoad(webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: UIWebView) {
         indicator?.startAnimating()
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
-        if let _ = indicator?.isAnimating() {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        if let _ = indicator?.isAnimating {
             indicator?.stopAnimating()
         }
         if (self.title == nil) {
             self.title = getWebPageTitle()
         }
-        goBackButton.enabled = webView.canGoBack;
-        goForwardButton.enabled = webView.canGoForward;
+        goBackButton.isEnabled = webView.canGoBack;
+        goForwardButton.isEnabled = webView.canGoForward;
     }
     
 }

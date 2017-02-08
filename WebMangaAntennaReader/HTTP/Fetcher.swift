@@ -11,13 +11,13 @@ import UIKit
 
 private let _Fetcher = Fetcher()
 
-public class Fetcher {
+open class Fetcher {
     
-    private let session = NSURLSession.sharedSession()
+    fileprivate let session = URLSession.shared
     
-    public typealias FetchCompletion = (object: AnyObject!, error: ResponseError!, local: Bool) -> Void
-    public typealias FetchParsing = (html: String!) -> AnyObject!
-    public typealias FetchParsingAPI = (json: AnyObject) -> AnyObject!
+    public typealias FetchCompletion = (_ object: AnyObject?, _ error: ResponseError?, _ local: Bool) -> Void
+    public typealias FetchParsing = (_ html: String?) -> AnyObject!
+    public typealias FetchParsingAPI = (_ json: AnyObject) -> AnyObject!
     
     public enum ResponseError: String {
         case NoConnection = "You are not connected to the internet"
@@ -25,41 +25,42 @@ public class Fetcher {
         case UnknownError = "An unknown error occurred"
     }
     
-    public class var sharedInstance: Fetcher {
+    open class var sharedInstance: Fetcher {
         return _Fetcher
     }
     
-    class func Fetch(ressource: String, parsing: FetchParsing, completion: FetchCompletion) {
+    class func Fetch(_ ressource: String, parsing: @escaping FetchParsing, completion: @escaping FetchCompletion) {
         
         self.showLoadingIndicator(true)
         
-        let task = _Fetcher.session.dataTaskWithURL(NSURL(string: ressource)! , completionHandler: {(data: NSData?, response, error: NSError?) in
+        let task = _Fetcher.session.dataTask(with: URL(string: ressource)! , completionHandler: {
+            (data, response, error) in
             if !(error != nil) {
                 if let realData = data {
-                    let html = NSString(data: realData, encoding: NSUTF8StringEncoding) as! String
-                    let object: AnyObject! = parsing(html: html)
+                    let html = NSString(data: realData, encoding: String.Encoding.utf8.rawValue) as! String
+                    let object: AnyObject! = parsing(html)
 
-                    dispatch_async(dispatch_get_main_queue(), { ()->() in
+                    DispatchQueue.main.async(execute: { ()->() in
                         self.showLoadingIndicator(false)
-                        completion(object: object, error: nil, local: false)
+                        completion(object, nil, false)
                     })
                 }
                 else {
-                    dispatch_async(dispatch_get_main_queue(), { ()->() in
+                    DispatchQueue.main.async(execute: { ()->() in
                         self.showLoadingIndicator(false)
-                        completion(object: nil, error: ResponseError.UnknownError, local: false)
+                        completion(nil, ResponseError.UnknownError, false)
                     })
                 }
             }
             else {
-                completion(object: nil, error: ResponseError.UnknownError, local: false)
+                completion(nil, ResponseError.UnknownError, false)
             }
         })
         task.resume()
     }
     
-    class func showLoadingIndicator(show: Bool) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = show
+    class func showLoadingIndicator(_ show: Bool) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = show
     }
     
 }

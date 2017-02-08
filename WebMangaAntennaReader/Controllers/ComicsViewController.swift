@@ -8,75 +8,99 @@
 
 import UIKit
 import CMPopTipView
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     
-    private var comics: [Comic] = []
-    private var imageCache:Dictionary<String, UIImage>  = Dictionary()
-    private var popupView:CMPopTipView? = nil
-    let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
+    fileprivate var comics: [Comic] = []
+    fileprivate var imageCache:Dictionary<String, UIImage>  = Dictionary()
+    fileprivate var popupView:CMPopTipView? = nil
+    let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.shared.delegate as! AppDelegate)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: Constants.Notifications.UPDATE_COMIC, object: nil)
-        self.refreshControl?.addTarget(self, action: "reload", forControlEvents: UIControlEvents.ValueChanged)
+        NotificationCenter.default.addObserver(self, selector: #selector(ComicsViewController.reload), name: NSNotification.Name(rawValue: Constants.Notifications.UPDATE_COMIC), object: nil)
+        self.refreshControl?.addTarget(self, action: #selector(ComicsViewController.reload), for: UIControlEvents.valueChanged)
         load()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let indexPath = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            self.tableView.deselectRow(at: indexPath, animated: false)
         }
-        self.editButton.enabled = (currentSyncMethod() == Constants.SyncMethods.MY_LIST)
+        self.editButton.isEnabled = (currentSyncMethod() == Constants.SyncMethods.MY_LIST)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         hideSuggestion()
         super.viewWillAppear(animated)
     }
     
-    private func currentMyListId() -> String {
-        if let listId = NSUserDefaults.standardUserDefaults().stringForKey(Constants.UserDefaultsKeys.LIST_ID) {
+    fileprivate func currentMyListId() -> String {
+        if let listId = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.LIST_ID) {
             return listId
         }
         return ""
     }
     
-    private func currentSyncMethod() -> Int? {
-        return NSUserDefaults.standardUserDefaults().integerForKey(Constants.UserDefaultsKeys.SYNC_METHOD)
+    fileprivate func currentSyncMethod() -> Int? {
+        return UserDefaults.standard.integer(forKey: Constants.UserDefaultsKeys.SYNC_METHOD)
     }
     
-    private func initPopupView() {
+    fileprivate func initPopupView() {
         popupView = CMPopTipView()
         // popup.delegate = self;
-        popupView?.textAlignment = NSTextAlignment.Left
+        popupView?.textAlignment = NSTextAlignment.left
         popupView?.backgroundColor = UIColor(red: 0, green: 183 / 255, blue: 238 / 255, alpha: 0.9);
         popupView?.borderWidth = 0;
         popupView?.has3DStyle = false
         popupView?.hasGradientBackground = false
     }
     
-    private func showSuggestion() {
+    fileprivate func showSuggestion() {
         if popupView == nil {
             initPopupView()
         }
         popupView?.message = "編集ボタンを押してWeb漫画アンテナのマイリストを作成しましょう。\nアプリで更新をチェックできるようになります。"
-        popupView?.presentPointingAtBarButtonItem(editButton, animated:true);
+        popupView?.presentPointing(at: editButton, animated:true);
     }
     
-    private func hideSuggestion() {
-        popupView?.dismissAnimated(true)
+    fileprivate func hideSuggestion() {
+        popupView?.dismiss(animated: true)
     }
     
-    private func load() {
-        let globalQueue: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        let mainQueue: dispatch_queue_t  = dispatch_get_main_queue();
-        dispatch_async(globalQueue, {
+    fileprivate func load() {
+        let globalQueue: DispatchQueue = DispatchQueue.global(qos: .background);
+        let mainQueue: DispatchQueue  = DispatchQueue.main;
+        globalQueue.async(execute: {
             self.comics = self.comicDao.findAll()!
-            dispatch_async(mainQueue, {
+            mainQueue.async(execute: {
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
                 if (self.currentSyncMethod() == Constants.SyncMethods.MY_LIST && self.comics.count == 0) {
@@ -87,7 +111,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
     }
     
     func reload() {
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0;
+        UIApplication.shared.applicationIconBadgeNumber = 0;
         if (Constants.SyncMethods.LIST_URL == currentSyncMethod()) {
             RemoteComic.fetch(forList: currentMyListId(), completion: fetchCompletationCallbak)
         } else {
@@ -95,20 +119,20 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         }
     }
     
-    private func fetchCompletationCallbak(remoteComics: [RemoteComic]!, error: Fetcher.ResponseError!, local: Bool) -> Void {
+    fileprivate func fetchCompletationCallbak(_ remoteComics: [RemoteComic]?, _ error: Fetcher.ResponseError?, _ local: Bool) -> Void {
         NSLog("Start fetchCompletationCallbak")
         if remoteComics?.count > 0 {
-            let q_global: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            dispatch_async(q_global, {
-                for remoteComic in remoteComics {
-                    self.comicDao.save(remoteComic)
+            let q_global: DispatchQueue = DispatchQueue.global(qos: .background);
+            q_global.async(execute: {
+                for remoteComic in remoteComics ?? [] {
+                    let _ = self.comicDao.save(remoteComic)
                 }
                 self.load()
                 NSLog("Finish fetchCompletationCallbak")
             })
             initNotificationSettings()
         } else {
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if (Constants.SyncMethods.LIST_URL == self.currentSyncMethod()) {
                     self.showListAlert("エラー", message: "漫画の更新情報が取得できませんでした。ネットワークに繋がっていないか、リストのURLが無効な可能性があります。リストのURLをご確認ください。")
                 } else {
@@ -120,63 +144,63 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         }
     }
     
-    private func initNotificationSettings() {
+    fileprivate func initNotificationSettings() {
         let settings = UIUserNotificationSettings(
-            forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Sound, UIUserNotificationType.Alert],
+            types: [UIUserNotificationType.badge, UIUserNotificationType.sound, UIUserNotificationType.alert],
             categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings);
+        UIApplication.shared.registerUserNotificationSettings(settings);
     }
     
-    private func showListAlert(title:String?, message: String?) {
+    fileprivate func showListAlert(_ title:String?, message: String?) {
         self.refreshControl?.endRefreshing()
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { action in
-            self.performSegueWithIdentifier(Constants.Seques.SHOW_INIT, sender: self)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in
+            self.performSegue(withIdentifier: Constants.Seques.SHOW_INIT, sender: self)
         }
         alertController.addAction(okAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
 
-    private func showAlert(title:String?, message: String?) {
+    fileprivate func showAlert(_ title:String?, message: String?) {
         self.refreshControl?.endRefreshing()
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
         alertController.addAction(okAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let c : Int = self.comics.count
         return c
     }
     
-    private func getImageFromHref(href:String) -> UIImage? {
-        if let imageURL = NSURL(string: href) {
-            if let imageData = NSData(contentsOfURL: imageURL) {
+    fileprivate func getImageFromHref(_ href:String) -> UIImage? {
+        if let imageURL = URL(string: href) {
+            if let imageData = try? Data(contentsOf: imageURL) {
                 return UIImage(data: imageData)
             }
         }
         return nil
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: ComicCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! ComicCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: ComicCell = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as! ComicCell
         let comic: Comic = self.comics[indexPath.row] as Comic
 
-        let imageUrl: String? = comic.valueForKey("thumb") as? String
-        cell.titleLabel.text = comic.valueForKey("title") as? String
-        cell.updateTimeLabel.text = comic.valueForKey("updatedAt") as? String
-        cell.siteNameLabel.text = comic.valueForKey("siteName") as? String
+        let imageUrl: String? = comic.value(forKey: "thumb") as? String
+        cell.titleLabel.text = comic.value(forKey: "title") as? String
+        cell.updateTimeLabel.text = comic.value(forKey: "updatedAt") as? String
+        cell.siteNameLabel.text = comic.value(forKey: "siteName") as? String
         cell.comicImageView.image = nil
         
-        let q_global: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        let q_main: dispatch_queue_t  = dispatch_get_main_queue();
+        let q_global: DispatchQueue = DispatchQueue.global(qos: .background);
+        let q_main: DispatchQueue  = DispatchQueue.main;
         
-        dispatch_async(q_global, {
+        q_global.async(execute: {
             if let href = imageUrl {
                 var image = self.imageCache[href]
                 if image == nil {
@@ -186,7 +210,7 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
                     }
                 }
                 if image != nil {
-                    dispatch_async(q_main, {
+                    q_main.async(execute: {
                         cell.comicImageView.image = image;
                         cell.layoutSubviews()
                     })
@@ -196,30 +220,30 @@ class ComicsViewController: UITableViewController, NSURLConnectionDelegate {
         return cell;
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier(Constants.Seques.SHOW_WEB_SITE, sender: self)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: Constants.Seques.SHOW_WEB_SITE, sender: self)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == Constants.Seques.SHOW_WEB_SITE) {
-            if let row:NSIndexPath = self.tableView.indexPathForSelectedRow {
+            if let row:IndexPath = self.tableView.indexPathForSelectedRow {
                 let comic: Comic = self.comics[row.row] as Comic
-                let webViewController = segue.destinationViewController as! WebViewController
+                let webViewController = segue.destination as! WebViewController
                 webViewController.url = comic.url
                 webViewController.title = comic.title
             }
         } else if (segue.identifier == Constants.Seques.SHOW_WEB_EDIT) {
-            let nav = segue.destinationViewController as! UINavigationController
+            let nav = segue.destination as! UINavigationController
             let webViewController = nav.topViewController as! WebViewController
             webViewController.url = Constants.WEB_MANGA_ANTENNA_URL + "/bookmark"
         }
     }
     
-    @IBAction func unwindComicsWithReload(seque:UIStoryboardSegue) {
+    @IBAction func unwindComicsWithReload(_ seque:UIStoryboardSegue) {
         reload()
     }
     
-    @IBAction func unwindComicsWithReset(seque:UIStoryboardSegue) {
+    @IBAction func unwindComicsWithReset(_ seque:UIStoryboardSegue) {
         comicDao.deleteAll()
         reload()
     }

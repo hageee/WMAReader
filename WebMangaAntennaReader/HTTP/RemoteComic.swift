@@ -8,19 +8,19 @@
 
 import Foundation
 
-public class RemoteComic: NSObject, NSCoding {
+open class RemoteComic: NSObject, NSCoding {
     
-    public var thumb: String?
-    public var date: String?
-    public var title: String?
-    public var url: String?
-    public var text: String?
-    public var siteName: String?
-    public var siteUrl: String?
+    open var thumb: String?
+    open var date: String?
+    open var title: String?
+    open var url: String?
+    open var text: String?
+    open var siteName: String?
+    open var siteUrl: String?
     
-    private let dateFormatter: NSDateFormatter = {
-        var df = NSDateFormatter()
-        df.locale = NSLocale(localeIdentifier: "en_US")
+    fileprivate let dateFormatter: DateFormatter = {
+        var df = DateFormatter()
+        df.locale = Locale(identifier: "en_US")
         df.dateFormat = "yyyy/MM/dd"
         return df
     }()
@@ -50,14 +50,14 @@ public class RemoteComic: NSObject, NSCoding {
         super.init()
         
         for key in serialization.values {
-            setValue(aDecoder.decodeObjectForKey(key.rawValue), forKey: key.rawValue)
+            setValue(aDecoder.decodeObject(forKey: key.rawValue), forKey: key.rawValue)
         }
     }
     
-    public func encodeWithCoder(aCoder: NSCoder)  {
+    open func encode(with aCoder: NSCoder)  {
         for key in serialization.values {
-            if let value: AnyObject = self.valueForKey(key.rawValue) {
-                aCoder.encodeObject(value, forKey: key.rawValue)
+            if let value: AnyObject = self.value(forKey: key.rawValue) as AnyObject? {
+                aCoder.encode(value, forKey: key.rawValue)
             }
         }
     }
@@ -71,34 +71,34 @@ public func ==(larg: RemoteComic, rarg: RemoteComic) -> Bool {
 //MARK: Network
 public extension RemoteComic {
     
-    public typealias CompletationCallback = (remoteComics: [RemoteComic]!, error: Fetcher.ResponseError!, local: Bool) -> Void
+    public typealias CompletationCallback = (_ remoteComics: [RemoteComic]?, _ error: Fetcher.ResponseError?, _ local: Bool) -> Void
     
-    public class func fetch(forList listId: String, completion: CompletationCallback) {
+    public class func fetch(forList listId: String, completion: @escaping CompletationCallback) {
         fetch("/list/" + listId, completion: completion)
     }
     
-    public class func fetchBookmark(completion: CompletationCallback) {
+    public class func fetchBookmark(_ completion: @escaping CompletationCallback) {
         fetch("/bookmark", completion: completion)
         
     }
     
-    private class func fetch(path: String, completion: CompletationCallback) {
+    fileprivate class func fetch(_ path: String, completion: @escaping CompletationCallback) {
         Fetcher.Fetch(Constants.WEB_MANGA_ANTENNA_URL + path,
             parsing: {(html) in
                 if let realHtml = html {
                     let RemoteComics = self.parseCollectionHTML(realHtml)
-                    return RemoteComics
+                    return RemoteComics as AnyObject!
                 }
                 else {
                     return nil
                 }
             },
             completion: {(object, error, local) in
-                if let realObject: AnyObject = object {
-                    completion(remoteComics: realObject as! [RemoteComic], error: error, local: local)
+                if let realObject = object as! [RemoteComic]? {
+                    completion(realObject, error, local)
                 }
                 else {
-                    completion(remoteComics: [], error: error, local: local)
+                    completion([],error, local)
                 }
         })
     }
@@ -107,8 +107,8 @@ public extension RemoteComic {
 //MARK: HTML
 internal extension RemoteComic {
     
-    internal class func parseCollectionHTML(html: String) -> [RemoteComic] {
-        let components = html.componentsSeparatedByString("<div class=\"entry\">")
+    internal class func parseCollectionHTML(_ html: String) -> [RemoteComic] {
+        let components = html.components(separatedBy: "<div class=\"entry\">")
         var RemoteComics: [RemoteComic] = []
         if (components.count > 0) {
             var index = 0
@@ -116,14 +116,14 @@ internal extension RemoteComic {
                 if index != 0 {
                     RemoteComics.append(RemoteComic(html: component))
                 }
-                index++
+                index += 1
             }
         }
         return RemoteComics
     }
     
-    internal func parseHTML(html: String) {
-        let scanner = NSScanner(string: html)
+    internal func parseHTML(_ html: String) {
+        let scanner = Scanner(string: html)
         self.thumb = scanner.scanTag("target=\"_blank\"><img src=\"", endTag: "\" width=")
         self.date = scanner.scanTag("<div class=\"entry-date\">", endTag: "</div>")
         

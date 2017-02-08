@@ -13,18 +13,18 @@ class CookiePersistanceManager {
     static let sharedInstance = CookiePersistanceManager()
     
     func loadCookie() -> Void {
-        if let cookieData = NSUserDefaults.standardUserDefaults().dataForKey(Constants.UserDefaultsKeys.COOKIE) {
-            let cookies:[NSHTTPCookie] = NSKeyedUnarchiver.unarchiveObjectWithData(cookieData) as! [NSHTTPCookie]
+        if let cookieData = UserDefaults.standard.data(forKey: Constants.UserDefaultsKeys.COOKIE) {
+            let cookies:[HTTPCookie] = NSKeyedUnarchiver.unarchiveObject(with: cookieData) as! [HTTPCookie]
             for cookie in cookies {
-                NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookie(cookie)
+                HTTPCookieStorage.shared.setCookie(cookie)
             }
         }
     }
     
     func saveCookie() -> Void {
-        if let cookies:[NSHTTPCookie] = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
-            let cookieData = NSKeyedArchiver.archivedDataWithRootObject(cookies)
-            NSUserDefaults.standardUserDefaults().setObject(cookieData, forKey: Constants.UserDefaultsKeys.COOKIE)
+        if let cookies:[HTTPCookie] = HTTPCookieStorage.shared.cookies {
+            let cookieData = NSKeyedArchiver.archivedData(withRootObject: cookies)
+            UserDefaults.standard.set(cookieData, forKey: Constants.UserDefaultsKeys.COOKIE)
         }
     }
 
