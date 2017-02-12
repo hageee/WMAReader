@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0401F1B71C02E4860054EBB1 /* BackgroudFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0401F1B61C02E4860054EBB1 /* BackgroudFetcher.swift */; };
+		040DC3DA1E50455600B8721D /* RegexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040DC3D91E50455600B8721D /* RegexString.swift */; };
+		040DC3E21E504FA200B8721D /* BackgroundFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040DC3E11E504FA200B8721D /* BackgroundFetcherTests.swift */; };
 		041EA9EE1C0B2AA60086BCDB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 041EA9ED1C0B2AA60086BCDB /* Settings.bundle */; };
 		043A4CF41AD92C4600FF1009 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A4CF31AD92C4600FF1009 /* WebViewController.swift */; };
 		04445E191A5D716500B3C6A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04445E181A5D716500B3C6A0 /* AppDelegate.swift */; };
@@ -31,8 +33,22 @@
 		A33E3475C989B56269C660B8 /* Pods_WebMangaAntennaReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F454BE829C02E524C673983 /* Pods_WebMangaAntennaReader.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		040DC3E41E504FA200B8721D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04445E0B1A5D716500B3C6A0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04445E121A5D716500B3C6A0;
+			remoteInfo = WebMangaAntennaReader;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0401F1B61C02E4860054EBB1 /* BackgroudFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroudFetcher.swift; sourceTree = "<group>"; };
+		040DC3D91E50455600B8721D /* RegexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexString.swift; sourceTree = "<group>"; };
+		040DC3DF1E504FA200B8721D /* WebMangaAntennaReaderUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebMangaAntennaReaderUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		040DC3E11E504FA200B8721D /* BackgroundFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundFetcherTests.swift; sourceTree = "<group>"; };
+		040DC3E31E504FA200B8721D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		041EA9ED1C0B2AA60086BCDB /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		043A4CF31AD92C4600FF1009 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		04445E131A5D716500B3C6A0 /* WebMangaAntennaReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebMangaAntennaReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +79,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		040DC3DC1E504FA200B8721D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		04445E101A5D716500B3C6A0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,12 +98,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040DC3E01E504FA200B8721D /* WebMangaAntennaReaderUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				040DC3E11E504FA200B8721D /* BackgroundFetcherTests.swift */,
+				040DC3E31E504FA200B8721D /* Info.plist */,
+			);
+			path = WebMangaAntennaReaderUnitTests;
+			sourceTree = "<group>";
+		};
 		04445E0A1A5D716500B3C6A0 = {
 			isa = PBXGroup;
 			children = (
+				04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */,
+				040DC3E01E504FA200B8721D /* WebMangaAntennaReaderUnitTests */,
 				8F2BED88D7DDE3ECBD927946 /* Frameworks */,
 				04445E141A5D716500B3C6A0 /* Products */,
-				04445E151A5D716500B3C6A0 /* WebMangaAntennaReader */,
 				049FAA931B05959500651FC3 /* Social.framework */,
 				798D48CA3375EC3CA9391BA5 /* Pods */,
 			);
@@ -90,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				04445E131A5D716500B3C6A0 /* WebMangaAntennaReader.app */,
+				040DC3DF1E504FA200B8721D /* WebMangaAntennaReaderUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -166,6 +200,7 @@
 			children = (
 				04B70FF41A6EACDA00FC0377 /* HTMLScanner.swift */,
 				04B70FF61A6EAD1500FC0377 /* HTMLString.swift */,
+				040DC3D91E50455600B8721D /* RegexString.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -190,6 +225,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		040DC3DE1E504FA200B8721D /* WebMangaAntennaReaderUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 040DC3E61E504FA200B8721D /* Build configuration list for PBXNativeTarget "WebMangaAntennaReaderUnitTests" */;
+			buildPhases = (
+				040DC3DB1E504FA200B8721D /* Sources */,
+				040DC3DC1E504FA200B8721D /* Frameworks */,
+				040DC3DD1E504FA200B8721D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				040DC3E51E504FA200B8721D /* PBXTargetDependency */,
+			);
+			name = WebMangaAntennaReaderUnitTests;
+			productName = WebMangaAntennaReaderUnitTests;
+			productReference = 040DC3DF1E504FA200B8721D /* WebMangaAntennaReaderUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		04445E121A5D716500B3C6A0 /* WebMangaAntennaReader */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04445E351A5D716600B3C6A0 /* Build configuration list for PBXNativeTarget "WebMangaAntennaReader" */;
@@ -217,10 +270,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Takashi Hagura";
 				TargetAttributes = {
+					040DC3DE1E504FA200B8721D = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = U687LNX3DY;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 04445E121A5D716500B3C6A0;
+					};
 					04445E121A5D716500B3C6A0 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = U687LNX3DY;
@@ -246,11 +305,19 @@
 			projectRoot = "";
 			targets = (
 				04445E121A5D716500B3C6A0 /* WebMangaAntennaReader */,
+				040DC3DE1E504FA200B8721D /* WebMangaAntennaReaderUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		040DC3DD1E504FA200B8721D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		04445E111A5D716500B3C6A0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,6 +380,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		040DC3DB1E504FA200B8721D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				040DC3E21E504FA200B8721D /* BackgroundFetcherTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		04445E0F1A5D716500B3C6A0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -333,10 +408,19 @@
 				04F65F0A1AD3E25900E42BE0 /* Comic.swift in Sources */,
 				04445E191A5D716500B3C6A0 /* AppDelegate.swift in Sources */,
 				044D55081ADF988D008312E9 /* ListSettingViewController.swift in Sources */,
+				040DC3DA1E50455600B8721D /* RegexString.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		040DC3E51E504FA200B8721D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04445E121A5D716500B3C6A0 /* WebMangaAntennaReader */;
+			targetProxy = 040DC3E41E504FA200B8721D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		04445E1F1A5D716500B3C6A0 /* Main.storyboard */ = {
@@ -362,6 +446,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		040DC3E71E504FA200B8721D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = U687LNX3DY;
+				INFOPLIST_FILE = WebMangaAntennaReaderUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.takashi8.WebMangaAntennaReaderUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WebMangaAntennaReader.app/WebMangaAntennaReader";
+			};
+			name = Debug;
+		};
+		040DC3E81E504FA200B8721D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = U687LNX3DY;
+				INFOPLIST_FILE = WebMangaAntennaReaderUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.takashi8.WebMangaAntennaReaderUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WebMangaAntennaReader.app/WebMangaAntennaReader";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		04445E331A5D716600B3C6A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -502,6 +626,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		040DC3E61E504FA200B8721D /* Build configuration list for PBXNativeTarget "WebMangaAntennaReaderUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				040DC3E71E504FA200B8721D /* Debug */,
+				040DC3E81E504FA200B8721D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		04445E0E1A5D716500B3C6A0 /* Build configuration list for PBXProject "WebMangaAntennaReader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

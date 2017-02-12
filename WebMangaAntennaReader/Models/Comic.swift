@@ -17,6 +17,5 @@ class Comic: NSManagedObject {
     @NSManaged var title: String
     @NSManaged var updatedAt: String
     @NSManaged var url: String
-    @NSManaged var willNotify: Bool
-
+    @NSManaged var willNotify: Bool // 使ってない
 }

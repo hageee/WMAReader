@@ -8,19 +8,8 @@
 
 import UIKit
 import CoreData
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
 
+fileprivate let REGEX_DATE = "[0-9]{4}/[0-9]{1,2}/[0-9]{1,2}"
 
 class BackgroudFetcher {
     
@@ -50,8 +39,10 @@ class BackgroudFetcher {
         let comicDao:ComicDao = ComicDao(appDelegate: UIApplication.shared.delegate as! AppDelegate)
         var updatedComics:[Comic] = []
         for remoteComic in remoteComics ?? [] {
-            if let comic = comicDao.save(remoteComic), let oldUpdatedAt = comicDao.findByUrl(remoteComic.url!)?.updatedAt {
-                if !oldUpdatedAt.hasSuffix("時間前")  && oldUpdatedAt < comic.updatedAt {
+            let oldUpdatedAt = comicDao.findByUrl(remoteComic.url!)?.updatedAt
+            let newComicData = comicDao.save(remoteComic)
+            if let comic = newComicData {
+                if BackgroudFetcher.isUpdated(oldTime: oldUpdatedAt, newTime: comic.updatedAt) {
                     updatedComics.append(comic)
                 }
             }
@@ -87,5 +78,42 @@ class BackgroudFetcher {
         }
         UIApplication.shared.presentLocalNotificationNow(notification)
         UIApplication.shared.applicationIconBadgeNumber = 1;
+    }
+    
+    public static func isUpdated(oldTime:String?, newTime:String?) -> Bool {
+        // @regret データ保存時に面倒がらずにDate型にパースして保存していればこんなめんどくさいことには...
+        guard let oldTime = oldTime, let newTime = newTime else {
+            return false
+        }
+        if oldTime.test(REGEX_DATE) {
+            // 以前取得したデータの更新日が日付形式だった場合
+            if newTime.test(REGEX_DATE) {
+                // 最新データも日付形式の場合は辞書順で比較
+                return oldTime < newTime
+            } else {
+                // 新データが日付形式でない場合、本日更新があったということなので、更新ありと判断
+                return true
+            }
+        } else {
+            // 以前取得したデータの更新日が、〜分前や、〜時間前のような形式だった場合
+            if oldTime.hasSuffix("時間前") {
+                if newTime.test(REGEX_DATE) {
+                    // 最新更新時間が日付になっている場合は、更新から1日以上経過し表記が日付形式に変わった状態なので更新なしと判断
+                    return false
+                } else {
+                    if newTime.hasSuffix("時間前") {
+                        // お互い〜時間前の場合、辞書順で比較
+                        // １日に複数回更新された場合、newTimeの方が値が小さくなる
+                        return oldTime > newTime
+                    }
+                    // oldTimeが〜時間前表記に対して、newTimeが〜秒前、か〜分前の表記になっているということなので、更新があったと判断
+                    return true
+                }
+            } else {
+                // 〜分前や〜秒前の場合は前回取得時に通知しているはずなので更新なしと判断
+                // 最低数時間おきにしかチェックしないのでここに来ることはありえない想定
+                return false
+            }
+        }
     }
 }

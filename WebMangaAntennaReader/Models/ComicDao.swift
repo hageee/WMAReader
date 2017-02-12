@@ -30,7 +30,6 @@ open class ComicDao {
             comic?.title = remoteComic.title!
             comic?.updatedAt = remoteComic.date!
             comic?.url = remoteComic.url!
-            comic?.willNotify = false
             appDelegate.saveContext()
             return comic
         }
